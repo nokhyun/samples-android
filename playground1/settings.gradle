@@ -16,3 +16,5 @@ rootProject.name = "playground1"
 include ':app'
 include ':feature'
 include ':feature:first'
+include ':core'
+include ':core:network'
