@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 
@@ -14,10 +18,29 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
         if (resources.getBoolean(R.bool.isTablet)) {
-            "Tablet".show(binding.root)
+            logger {
+                "Tablet".also {
+                    it.show(binding.root)
+                }
+            }
+            val navView = (binding.navView as NavigationView)
+            navView.setupWithNavController(navController)
         } else {
-            "Mobile".show(binding.root)
+            logger {
+                "Mobile".also {
+                    it.show(binding.root)
+                }
+            }
+            val navView = (binding.bottomNavView as BottomNavigationView)
+            navView.setupWithNavController(navController)
+        }
+
+        navController.addOnDestinationChangedListener{ _, desination, _ ->
+            logger { desination }
         }
 
 //        binding.refresh.setOnRefreshListener(object: TestRefresh(){
@@ -33,6 +56,10 @@ fun String.show(view: View) {
     Snackbar.make(view, this, 5000).show()
 }
 
-fun String.log() {
+private fun String.logger() {
     Log.e("logloglog", this)
+}
+
+fun logger(msg: () -> Any){
+    msg().toString().logger()
 }
