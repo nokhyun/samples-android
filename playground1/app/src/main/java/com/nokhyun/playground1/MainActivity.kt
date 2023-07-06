@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         screenSizeController.topLevelScreenSizeInit(resources.getBoolean(R.bool.isTablet), binding, navController) {
-            // TODO Processing after navigation view (NavigationView 이후 처리)
+            // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
         }
 
         navController.addOnDestinationChangedListener { _, desination, _ ->
@@ -57,14 +57,6 @@ class ScreenSizeControllerImpl : ScreenSizeController {
     override fun topLevelScreenSizeInit(isTablet: Boolean, binding: ViewDataBinding, navController: NavController, onResult: () -> Unit) {
         val children = (binding.root as ViewGroup).children
 
-//        if(navigationViewHelper2.asNavigationView<NavigationView>(children) == null){
-//            initMobile()
-//        }else{
-//            initTable()
-//        }
-//
-
-        // TODO 여기 개선해야할 것 같은디..
         when {
             children.any { it is NavigationView } -> {
                 val navigationView = navigationViewHelper2.asNavigationView<NavigationView>(children)
