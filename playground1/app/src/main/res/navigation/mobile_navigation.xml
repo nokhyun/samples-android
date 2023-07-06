@@ -9,5 +9,5 @@
         android:name="com.nokhyun.first.FirstFragment" />
 
     <fragment android:id="@+id/secondFragment"
-        android:name="com.nokhyun.first.SecondFragment"/>
+        android:name="com.nokhyun.second.SecondFragment"/>
 </navigation>

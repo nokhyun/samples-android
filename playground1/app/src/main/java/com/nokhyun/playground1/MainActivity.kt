@@ -39,9 +39,10 @@ class MainActivity : AppCompatActivity() {
             navView.setupWithNavController(navController)
         }
 
-        navController.addOnDestinationChangedListener{ _, desination, _ ->
+        navController.addOnDestinationChangedListener { _, desination, _ ->
             logger { desination }
         }
+
 
 //        binding.refresh.setOnRefreshListener(object: TestRefresh(){
 //            override fun onTest(): SwipeRefreshLayout {
@@ -60,6 +61,6 @@ private fun String.logger() {
     Log.e("logloglog", this)
 }
 
-fun logger(msg: () -> Any){
+fun logger(msg: () -> Any) {
     msg().toString().logger()
 }
