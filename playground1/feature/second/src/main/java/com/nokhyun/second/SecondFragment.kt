@@ -11,6 +11,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.nokhyun.second.databinding.FragmentSecondBinding
 
@@ -20,10 +21,11 @@ class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val binding: FragmentSecondBinding get() = _binding!!
+    private var money: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSecondBinding.inflate(layoutInflater)
-        return _binding!!.run {
+        return binding.run {
             lifecycleOwner = this@SecondFragment.viewLifecycleOwner
 
             root
@@ -32,6 +34,15 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.etMoney?.doOnTextChanged { text, _, _, _ ->
+            money
+        }
+
+
+        binding.btnPay?.setOnClickListener {
+            binding.wvToss.loadUrl("javascript:pay(${money.let { if(it.toString().isEmpty()) 0 else it }})")
+        }
 
         binding.wvToss.apply {
             settings.javaScriptEnabled = true
@@ -54,7 +65,7 @@ class SecondFragment : Fragment() {
                             !url.getQueryParameter("isTossApp")!!.toBoolean()
                         }
 
-                        if(isPaymentFail){
+                        if (isPaymentFail) {
                             Toast.makeText(requireContext(), "실패했지롱.", Toast.LENGTH_SHORT).show()
                         }
 

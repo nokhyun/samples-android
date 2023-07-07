@@ -9,8 +9,6 @@ Y
 )core/network/src/main/AndroidManifest.xml,f/e/fe22d2cfdba12783f96437918fcacdd1e2ef178b
 I
 buildSrc/build.gradle.kts,d/9/d90b697280fada81e52ec92d24725920f1cb087b
-n
->feature/first/src/main/java/com/nokhyun/first/FirstFragment.kt,3/c/3c3cab6bcdf04ba6064aabc54534596c8633b1f9
 Z
 *feature/first/src/main/AndroidManifest.xml,c/f/cf25142fa40c0d64c44d8bb373639a349866616d
 [
