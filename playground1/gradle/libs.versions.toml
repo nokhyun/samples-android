@@ -4,12 +4,14 @@ retrofit-serializationAdapter = "1.0.0"
 okhttp = "4.10.0"
 serialization = "1.5.0"
 plugin-serialization = "1.8.22"
+tossPay = "0.1.9"
 
 [libraries]
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-serializationAdapater = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serializationAdapter"}
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+toss-core = { module = "com.github.tosspayments:payment-sdk-android", version.ref = "tossPay"}
 
 [plugins]
 plugin-serialization = { id = "plugin.serialization", version.ref = "serialization"}
