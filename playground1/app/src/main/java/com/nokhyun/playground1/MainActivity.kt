@@ -1,7 +1,10 @@
 package com.nokhyun.playground1
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 
@@ -25,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, desination, _ ->
             logger { desination }
         }
-
 
 //        binding.refresh.setOnRefreshListener(object: TestRefresh(){
 //            override fun onTest(): SwipeRefreshLayout {

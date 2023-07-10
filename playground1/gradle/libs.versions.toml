@@ -4,6 +4,8 @@ retrofit-serializationAdapter = "1.0.0"
 okhttp = "4.10.0"
 serialization = "1.5.0"
 plugin-serialization = "1.8.22"
+
+
 tossPay = "0.1.9"
 compose-activity = "1.7.2"
 compose-ui = "1.4.3"
