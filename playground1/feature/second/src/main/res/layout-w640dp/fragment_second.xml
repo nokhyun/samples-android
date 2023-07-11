@@ -11,7 +11,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="금액을 입력해주세요."
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnPay"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -22,6 +22,16 @@
                 android:inputType="number"
                 android:maxLength="6" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="결제"
+            app:layout_constraintTop_toTopOf="@id/tilMoney"
+            app:layout_constraintBottom_toBottomOf="@id/tilMoney"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tilMoney" />
 
         <WebView
             android:id="@+id/wvToss"

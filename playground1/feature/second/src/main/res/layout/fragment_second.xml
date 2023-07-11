@@ -10,19 +10,35 @@
             android:id="@+id/wvToss"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btnPay"
+            app:layout_constraintBottom_toTopOf="@id/tilMoney"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMoney"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="금액을 입력해주세요."
+            app:layout_constraintBottom_toTopOf="@id/btnPay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="6" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="200원 결제"
-            app:layout_constraintTop_toBottomOf="@id/wvToss"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="결제"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

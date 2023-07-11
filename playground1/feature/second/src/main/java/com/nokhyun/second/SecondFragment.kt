@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -22,6 +23,9 @@ class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val binding: FragmentSecondBinding get() = _binding!!
     private var money: Int = 0
+    private val imm : InputMethodManager by lazy {
+        requireContext().getSystemService(InputMethodManager::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSecondBinding.inflate(layoutInflater)
@@ -35,12 +39,14 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etMoney?.doOnTextChanged { text, _, _, _ ->
-            money
+        binding.etMoney.doOnTextChanged { text, _, _, _ ->
+            if(text.isNullOrBlank()) return@doOnTextChanged
+            money = text.toString().toInt()
         }
 
 
-        binding.btnPay?.setOnClickListener {
+        binding.btnPay.setOnClickListener {
+            imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
             binding.wvToss.loadUrl("javascript:pay(${money.let { if(it.toString().isEmpty()) 0 else it }})")
         }
 

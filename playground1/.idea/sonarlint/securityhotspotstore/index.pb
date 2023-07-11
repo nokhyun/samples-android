@@ -25,3 +25,7 @@ D
 app/build.gradle.kts,d/2/d2a4383452aad84a18429a5844d31330a012a9e6
 N
 feature/first/build.gradle.kts,d/1/d1168e8f886b396650845750f48882d1f58114ce
+t
+Dfeature/first/src/main/java/com/nokhyun/first/CardPaymentActivity.kt,1/c/1c1d1f6e41aaa6974242a14d07f0b6a4cf2b3228
+O
+feature/second/build.gradle.kts,7/a/7ae64dc572b88d9f6ec420910ca2c291ae5f4344
