@@ -29,3 +29,7 @@ t
 Dfeature/first/src/main/java/com/nokhyun/first/CardPaymentActivity.kt,1/c/1c1d1f6e41aaa6974242a14d07f0b6a4cf2b3228
 O
 feature/second/build.gradle.kts,7/a/7ae64dc572b88d9f6ec420910ca2c291ae5f4344
+q
+Afeature/second/src/main/java/com/nokhyun/second/SecondFragment.kt,5/d/5dc424ec62f008b6a26726929eebc921c3a05483
+q
+Aapp/src/main/java/com/nokhyun/playground1/ScreenSizeController.kt,2/c/2c71b9f95ec2ef17d806ba418ed02731780879f7

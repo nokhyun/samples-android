@@ -1,10 +1,11 @@
 package com.nokhyun.playground1
 
 import android.os.Bundle
-import android.view.Gravity
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 
@@ -29,11 +30,17 @@ class MainActivity : AppCompatActivity() {
             logger { desination }
         }
 
-//        binding.refresh.setOnRefreshListener(object: TestRefresh(){
-//            override fun onTest(): SwipeRefreshLayout {
-//                "왔니".log()
-//                return binding.refresh
+//        binding.navView?.apply {
+//            val headerViewGroup = binding.navView.inflateHeaderView(R.layout.header_main_layout) as ConstraintLayout
+//            headerViewGroup.children.find { it is AppCompatTextView }?.asView<AppCompatTextView>()?.let {
+//                logger { it.text.toString() }
 //            }
-//        })
+//            logger { "headerViewGroup: $headerViewGroup" }
+//        }
     }
+}
+
+@Suppress("Unchecked")
+fun <R> View.asView(): R {
+    return this as R
 }
