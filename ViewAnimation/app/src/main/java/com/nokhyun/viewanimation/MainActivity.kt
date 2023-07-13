@@ -2,6 +2,8 @@ package com.nokhyun.viewanimation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
 import androidx.transition.ChangeClipBounds
@@ -20,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var scene1: Scene
     private lateinit var scene2: Scene
+
+    private val _testLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    val testLiveData: LiveData<Boolean> get() = _testLiveData
 
     private enum class TransitionType {
         CHANGE_BOUNDS,
@@ -60,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 SLIDE -> {
                     Slide()
                 }
+
                 AUTO -> {
                     AutoTransition()
                 }
@@ -71,6 +77,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.main = this
+        binding.lifecycleOwner = this
 
         // layout create
         scene1 = Scene.getSceneForLayout(binding.sceneRoot, R.layout.scene_a, this)
@@ -86,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnScene2.setOnClickListener {
+            _testLiveData.value = true
             TransitionManager.go(scene2, transitionType2.get())
         }
     }
