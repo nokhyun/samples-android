@@ -78,12 +78,6 @@ class FirstFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 //        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
-
-//        val request = NavDeepLinkRequest.Builder
-//            .fromUri("android-app://example.google.app/settingsTwoFragment/id=4?myarg=${"aa"}?name=${"Kim"}}".toUri())
-//            .build()
-//        findNavController().navigate(request)
-
     }
 
     override fun onDestroyView() {

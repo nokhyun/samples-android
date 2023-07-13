@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity() {
             // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
         }
 
-        navController.addOnDestinationChangedListener { _, desination, _ ->
-            logger { desination }
-        }
-
         logger { "before check" }
 //        check(false) {
 //
