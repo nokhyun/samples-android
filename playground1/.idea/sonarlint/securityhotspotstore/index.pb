@@ -33,3 +33,5 @@ q
 Afeature/second/src/main/java/com/nokhyun/second/SecondFragment.kt,5/d/5dc424ec62f008b6a26726929eebc921c3a05483
 q
 Aapp/src/main/java/com/nokhyun/playground1/ScreenSizeController.kt,2/c/2c71b9f95ec2ef17d806ba418ed02731780879f7
+n
+>feature/first/src/main/java/com/nokhyun/first/FirstFragment.kt,3/c/3c3cab6bcdf04ba6064aabc54534596c8633b1f9
