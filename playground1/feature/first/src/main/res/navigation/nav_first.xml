@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_first"
+    app:startDestination="@id/firstFragment">
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="com.nokhyun.first.FirstFragment">
+
+        <action
+            android:id="@+id/actionFirstFragmentToFristDetialFragment"
+            app:destination="@id/firstDetailFragment">
+
+            <argument
+                android:name="firstModel"
+                app:argType="com.nokhyun.first.FirstModel" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/firstDetailFragment"
+        android:name="com.nokhyun.first.FirstDetailFragment">
+
+        <argument
+            android:name="firstModel"
+            app:argType="com.nokhyun.first.FirstModel" />
+    </fragment>
+</navigation>

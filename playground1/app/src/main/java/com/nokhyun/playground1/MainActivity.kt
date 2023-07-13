@@ -3,6 +3,7 @@ package com.nokhyun.playground1
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 

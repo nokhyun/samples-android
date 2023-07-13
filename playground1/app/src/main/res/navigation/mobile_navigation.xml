@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/nav_first">
+
+    <include app:graph="@navigation/nav_first"/>
 
     <fragment
-        android:id="@+id/firstFragment"
-        android:name="com.nokhyun.first.FirstFragment" />
+        android:id="@+id/secondFragment"
+        android:name="com.nokhyun.second.SecondFragment" />
 
-    <fragment android:id="@+id/secondFragment"
-        android:name="com.nokhyun.second.SecondFragment"/>
 </navigation>
