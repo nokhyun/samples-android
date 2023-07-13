@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/firstFragment"
+        android:id="@+id/nav_first"
         android:title="@string/menu_first"
         android:icon="@drawable/ic_launcher_foreground"
         app:showAsAction="always"/>

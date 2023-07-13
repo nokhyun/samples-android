@@ -3,9 +3,7 @@ package com.nokhyun.playground1
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 
@@ -26,9 +24,19 @@ class MainActivity : AppCompatActivity() {
             // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
         }
 
-        navController.addOnDestinationChangedListener { _, desination, _ ->
-            logger { desination }
+        logger { "before check" }
+//        check(false) {
+//
+//        }
+
+        val value1: Any? = null
+
+        value1.guard {
+            logger { "가드당해버렸다" }
+            return
         }
+        // TODO
+        logger { "after check" }
 
 //        binding.navView?.apply {
 //            val headerViewGroup = binding.navView.inflateHeaderView(R.layout.header_main_layout) as ConstraintLayout
@@ -43,4 +51,14 @@ class MainActivity : AppCompatActivity() {
 @Suppress("Unchecked")
 fun <R> View.asView(): R {
     return this as R
+}
+
+// TODO
+inline fun <reified R> R?.guard(block: () -> Any): R? {
+    return if (this == null) {
+        block() // block() 위치 else 로 바꾸면 block 내부로 들어가지는건 let 이랑 사용에 대해서만... ... .. 별차이가 없는듯...
+        null
+    } else {
+        this
+    }
 }

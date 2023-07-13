@@ -4,6 +4,7 @@ retrofit-serializationAdapter = "1.0.0"
 okhttp = "4.10.0"
 serialization = "1.5.0"
 plugin-serialization = "1.8.22"
+fragment = "1.6.0"
 
 
 tossPay = "0.1.9"
@@ -15,6 +16,7 @@ compose-material = "1.4.3"
 compose-viewModel = "2.6.1"
 
 [libraries]
+fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment"}
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-serializationAdapater = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serializationAdapter"}
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }

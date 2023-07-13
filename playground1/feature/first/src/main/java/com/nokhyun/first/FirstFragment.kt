@@ -6,15 +6,36 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nokhyun.first.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding: FragmentFirstBinding get() = _binding!!
+
+    private val firstAdapter by lazy {
+        FirstAdapter { view, transitionName ->
+            findNavController().navigate(
+                R.id.actionFirstFragmentToFristDetialFragment,
+                bundleOf(
+                    "firstModel" to FirstModel(name = transitionName)
+                ),
+                null,
+                navigatorExtras = FragmentNavigatorExtras(
+                    view to transitionName
+                )
+            )
+        }
+    }
 
     // Registers a photo picker activity launcher in single-select mode.
     private val pickMedia by lazy {
@@ -31,20 +52,31 @@ class FirstFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFirstBinding.inflate(layoutInflater)
+        sharedElementEnterTransition = android.transition.TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
+
         return binding.run {
             lifecycleOwner = this@FirstFragment.viewLifecycleOwner
-
             root
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        (binding.root.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+//        super.onViewCreated(view, savedInstanceState)
 
         binding.btnCard?.setOnClickListener {
             startActivity(CardPaymentActivity::class.java)
         }
 
+        binding.rvFirst?.apply {
+            logger { "rv apply" }
+            setHasFixedSize(true)
+            adapter = firstAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
 //        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
     }
 
@@ -56,4 +88,8 @@ class FirstFragment : Fragment() {
     private fun startActivity(klass: Class<*>) {
         startActivity(Intent(requireContext(), klass))
     }
+}
+
+fun logger(log: () -> String) {
+    Log.e("logger", log())
 }
