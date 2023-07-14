@@ -4,13 +4,19 @@
 
     <item
         android:id="@+id/nav_first"
-        android:title="@string/menu_first"
         android:icon="@drawable/ic_launcher_foreground"
-        app:showAsAction="always"/>
+        android:title="@string/menu_first"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/secondFragment"
-        android:title="@string/menu_second"
         android:icon="@drawable/ic_launcher_foreground"
-        app:showAsAction="always"/>
+        android:title="@string/menu_second"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_third"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/menu_third"
+        app:showAsAction="always" />
 </menu>
