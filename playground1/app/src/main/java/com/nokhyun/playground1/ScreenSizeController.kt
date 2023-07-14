@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 
@@ -15,7 +16,7 @@ interface ScreenSizeController {
 
 class ScreenSizeControllerImpl : ScreenSizeController {
 
-    private val navigationViewHelper2 = NavigationViewHelper2()
+    private val navigationViewHelper = NavigationViewHelper()
     private val bindingHelper = BindingHelper()
 
     override fun topLevelScreenSizeInit(isTablet: Boolean, binding: ViewDataBinding, navController: NavController, onResult: () -> Unit) {
@@ -23,10 +24,10 @@ class ScreenSizeControllerImpl : ScreenSizeController {
         onResult()
     }
 
-    private inline fun <reified R> NavigationViewHelper2.asNavigationView(children: Sequence<View>): R? = getNavigationView(children)
+    private inline fun <reified R> NavigationViewHelper.asNavigationView(children: Sequence<View>): R? = getNavigationView(children)
     private inline fun <reified R> BindingHelper.asBinding(binding: ViewDataBinding): R = getBinding(binding)
 
-    private inner class NavigationViewHelper2 {
+    private inner class NavigationViewHelper {
         inline fun <reified R> getNavigationView(view: Sequence<View>): R? {
             return view.find { it is R } as R
         }
@@ -55,12 +56,17 @@ class ScreenSizeControllerImpl : ScreenSizeController {
             }
         } else {
             logger { "Mobile" }
-            binding.bottomNavView?.setupWithNavController(navController)
+            binding.bottomNavView?.setupWithBottomNavigationController(navController)
         }
     }
 }
 
-internal fun String.show(view: View) {
+fun BottomNavigationView.setupWithBottomNavigationController(navController: NavController) {
+    this.setupWithNavController(navController)
+    this.setOnItemReselectedListener { }
+}
+
+fun String.show(view: View) {
     Snackbar.make(view, this, 5_000).show()
 }
 

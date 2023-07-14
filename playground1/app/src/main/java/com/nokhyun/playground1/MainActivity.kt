@@ -3,6 +3,7 @@ package com.nokhyun.playground1
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
@@ -10,6 +11,7 @@ import com.nokhyun.playground1.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private val screenSizeController: ScreenSizeController by lazy { ScreenSizeControllerImpl() }
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         screenSizeController.topLevelScreenSizeInit(resources.getBoolean(R.bool.isTablet), binding, navController) {
             // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
@@ -46,6 +48,8 @@ class MainActivity : AppCompatActivity() {
 //            logger { "headerViewGroup: $headerViewGroup" }
 //        }
     }
+
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
 }
 
 @Suppress("Unchecked")
