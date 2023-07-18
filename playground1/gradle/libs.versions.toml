@@ -3,9 +3,11 @@ retrofit = "2.9.0"
 retrofit-serializationAdapter = "1.0.0"
 okhttp = "4.10.0"
 serialization = "1.5.0"
+serialization-plugins = "1.8.22"
 plugin-serialization = "1.8.22"
 fragment = "1.6.0"
-
+hilt = "2.44"
+serialization-converter = "1.0.0"
 
 tossPay = "0.1.9"
 compose-activity = "1.7.2"
@@ -21,7 +23,10 @@ retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "ret
 retrofit-serializationAdapater = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serializationAdapter"}
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+kotlinx-serializationConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter" , version.ref = "serialization-converter"}
 toss-core = { module = "com.github.tosspayments:payment-sdk-android", version.ref = "tossPay"}
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
+hilt-kapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
 
 # compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity"}
@@ -32,4 +37,4 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewModel"}
 
 [plugins]
-plugin-serialization = { id = "plugin.serialization", version.ref = "serialization"}
+plugin-serialization = { id = "plugin.serialization", version.ref = "serialization-plugins"}
