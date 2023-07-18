@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":feature:first"))
     implementation(project(":feature:second"))
     implementation(project(":feature:third"))
+    implementation(project(":data:fakePaging"))
 
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

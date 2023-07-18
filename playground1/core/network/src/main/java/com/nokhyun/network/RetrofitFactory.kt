@@ -14,7 +14,7 @@ interface RetrofitFactory {
     }
 }
 
-internal class ServiceFactory @Inject constructor(
+class ServiceFactory @Inject constructor(
     private val okHttpClient: OkHttpClient
 ) : RetrofitFactory.Provider() {
     override fun <R> create(baseUrl: String, klass: Class<R>): R {

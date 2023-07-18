@@ -1,6 +1,8 @@
 package com.nokhyun.fakepaging
 
 import com.nokhyun.network.RetrofitFactory
+import com.nokhyun.network.ServiceFactory
+import com.nokhyun.network.ServiceFactory_Factory
 import com.nokhyun.passenger.FakePagingRepository
 import dagger.Module
 import dagger.Provides
@@ -14,7 +16,7 @@ internal object FakePagingModule {
 
     @Provides
     @Singleton
-    fun provideFakePagingService(serviceFactory: RetrofitFactory.Provider) = serviceFactory.create("https://api.instantwebtools.net", FakePagingService::class.java)
+    fun provideFakePagingService(serviceFactory: ServiceFactory) = serviceFactory.create("https://api.instantwebtools.net", FakePagingService::class.java)
 
     @Provides
     @Singleton

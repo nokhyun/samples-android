@@ -20,6 +20,7 @@ data class Passenger(
 
 @Serializable
 data class Airline(
+    val _id: String,
     val id: Int,
     val name: String,
     val country: String,
@@ -27,5 +28,6 @@ data class Airline(
     val slogan: String,
     val head_quaters: String,
     val website: String,
-    val established: String
+    val established: String,
+    val __v: Int
 )

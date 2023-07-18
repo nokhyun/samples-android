@@ -6,7 +6,9 @@ import com.nokhyun.passenger.FakePagingPassengerUseCase
 import com.nokhyun.passenger.PassengerEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,15 +17,11 @@ class ThirdViewModel @Inject constructor(
     private val passengerUseCase: FakePagingPassengerUseCase
 ) : ViewModel() {
 
-//    val resultFlow = flow<PassengerEntity> {
-////        passengerUseCase()
-//    }
-//
-//    init {
-//        viewModelScope.launch {
-//            resultFlow.collectLatest {
-//                logger { it.toString() }
-//            }
-//        }
-//    }
+    init {
+        viewModelScope.launch {
+            passengerUseCase().collectLatest {
+                logger { it.toString() }
+            }
+        }
+    }
 }

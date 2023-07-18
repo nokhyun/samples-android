@@ -5,8 +5,8 @@ import retrofit2.http.QueryMap
 
 interface FakePagingService {
 
-    @GET
-    fun fetchPassenger(
+    @GET("/v1/passenger")
+    suspend fun fetchPassenger(
         @QueryMap passengerMap: Map<String, Int>
     ): PassengerResponse
 }

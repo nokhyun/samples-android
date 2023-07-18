@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ThirdFragment : Fragment() {
 
-//    private val thirdViewModel: ThirdViewModel  by viewModels()
+    private val thirdViewModel: ThirdViewModel  by viewModels()
 
     private var _binding: FragmentThirdBinding? = null
     private val binding: FragmentThirdBinding get() = _binding!!
@@ -25,6 +25,11 @@ class ThirdFragment : Fragment() {
 
             root
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        thirdViewModel
     }
 }
 
