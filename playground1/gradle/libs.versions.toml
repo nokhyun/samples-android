@@ -8,6 +8,7 @@ plugin-serialization = "1.8.22"
 fragment = "1.6.0"
 hilt = "2.44"
 serialization-converter = "1.0.0"
+paging3 = "3.1.1"
 
 tossPay = "0.1.9"
 compose-activity = "1.7.2"
@@ -27,6 +28,7 @@ kotlinx-serializationConverter = { module = "com.jakewharton.retrofit:retrofit2-
 toss-core = { module = "com.github.tosspayments:payment-sdk-android", version.ref = "tossPay"}
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
 hilt-kapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
+paging3 = { module = "androidx.paging:paging-runtime", version.ref = "paging3"}
 
 # compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity"}

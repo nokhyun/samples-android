@@ -5,6 +5,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import javax.inject.Inject
 
 interface RetrofitFactory {
     abstract class Provider {
@@ -13,7 +14,7 @@ interface RetrofitFactory {
     }
 }
 
-class ServiceFactory(
+internal class ServiceFactory @Inject constructor(
     private val okHttpClient: OkHttpClient
 ) : RetrofitFactory.Provider() {
     override fun <R> create(baseUrl: String, klass: Class<R>): R {

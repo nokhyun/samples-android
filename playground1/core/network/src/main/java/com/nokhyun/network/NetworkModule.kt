@@ -11,12 +11,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+internal object NetworkModule {
 
     @Provides
     @Singleton
     fun provideServiceFactory(okHttpClient: OkHttpClient) = ServiceFactory(okHttpClient)
 
+    @OtherInterceptor
     @Provides
     @Singleton
     fun provideOtherInterceptor() = com.nokhyun.network.interceptors.OtherInterceptor()
@@ -28,7 +29,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOtherInterceptorOkHttpClient(
-        otherInterceptor: com.nokhyun.network.interceptors.OtherInterceptor
+        @OtherInterceptor otherInterceptor: com.nokhyun.network.interceptors.OtherInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
