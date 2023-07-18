@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 @Module
@@ -24,12 +25,14 @@ object NetworkModule {
     @Singleton
     fun provideFakeService(serviceFactory: ServiceFactory) = serviceFactory.create("https://jsonplaceholder.typicode.com/", FakeService::class.java)
 
-    @OtherInterceptor
     @Provides
     @Singleton
     fun provideOtherInterceptorOkHttpClient(
         otherInterceptor: com.nokhyun.network.interceptors.OtherInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        })
         .addInterceptor(otherInterceptor)
         .build()
 }

@@ -47,6 +47,8 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":core:network"))
+
     implementation(project(":feature:first"))
     implementation(project(":feature:second"))
     implementation(project(":feature:third"))

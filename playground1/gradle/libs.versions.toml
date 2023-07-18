@@ -1,7 +1,7 @@
 [versions]
 retrofit = "2.9.0"
 retrofit-serializationAdapter = "1.0.0"
-okhttp = "4.10.0"
+okhttp = "4.11.0"
 serialization = "1.5.0"
 serialization-plugins = "1.8.22"
 plugin-serialization = "1.8.22"
