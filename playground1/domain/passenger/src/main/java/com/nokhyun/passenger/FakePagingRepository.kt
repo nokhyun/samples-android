@@ -1,7 +1,8 @@
 package com.nokhyun.passenger
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
 interface FakePagingRepository {
-    fun fetchPassenger(): Flow<PassengerEntity>
+    fun fetchPassenger(): Flow<PagingData<com.nokhyun.passenger.Passenger>>
 }

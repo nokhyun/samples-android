@@ -9,7 +9,7 @@ internal object PassengerMapper {
         data = data.map { it.toEntity() }
     )
 
-    private fun Passenger.toEntity() = com.nokhyun.passenger.Passenger(
+    fun Passenger.toEntity() = com.nokhyun.passenger.Passenger(
         _id = _id,
         name = name,
         trips = trips,
