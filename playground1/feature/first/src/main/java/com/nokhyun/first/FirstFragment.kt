@@ -8,16 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nokhyun.first.databinding.FragmentFirstBinding
+import com.nokhyun.network.FakeService
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FirstFragment : Fragment() {
+
+    @Inject
+    lateinit var fakeService: FakeService
 
     private var _binding: FragmentFirstBinding? = null
     private val binding: FragmentFirstBinding get() = _binding!!
@@ -78,6 +85,9 @@ class FirstFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 //        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+        viewLifecycleOwner.lifecycleScope.launch {
+            coroutineLogger { fakeService.todo().id.toString() }
+        }
     }
 
     override fun onDestroyView() {
@@ -91,5 +101,9 @@ class FirstFragment : Fragment() {
 }
 
 fun logger(log: () -> String) {
+    Log.e("logger", log())
+}
+
+suspend fun coroutineLogger(log: suspend () -> String) {
     Log.e("logger", log())
 }

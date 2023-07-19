@@ -4,10 +4,11 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/nav_first">
 
-    <include app:graph="@navigation/nav_first"/>
+    <include app:graph="@navigation/nav_first" />
 
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.nokhyun.second.SecondFragment" />
 
+    <include app:graph="@navigation/nav_third" />
 </navigation>

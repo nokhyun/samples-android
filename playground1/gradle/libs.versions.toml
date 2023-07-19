@@ -1,11 +1,14 @@
 [versions]
 retrofit = "2.9.0"
 retrofit-serializationAdapter = "1.0.0"
-okhttp = "4.10.0"
+okhttp = "4.11.0"
 serialization = "1.5.0"
+serialization-plugins = "1.8.22"
 plugin-serialization = "1.8.22"
 fragment = "1.6.0"
-
+hilt = "2.44"
+serialization-converter = "1.0.0"
+paging3 = "3.1.1"
 
 tossPay = "0.1.9"
 compose-activity = "1.7.2"
@@ -14,22 +17,30 @@ compose-uiTooling = "1.4.3"
 compose-foundation = "1.4.3"
 compose-material = "1.4.3"
 compose-viewModel = "2.6.1"
+compose-coil = "2.4.0"
+compose-paging3 = "3.2.0-rc01"
 
 [libraries]
-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment"}
+fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-serializationAdapater = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serializationAdapter"}
+retrofit-serializationAdapater = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serializationAdapter" }
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
-kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
-toss-core = { module = "com.github.tosspayments:payment-sdk-android", version.ref = "tossPay"}
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-serializationConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "serialization-converter" }
+toss-core = { module = "com.github.tosspayments:payment-sdk-android", version.ref = "tossPay" }
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-kapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+paging3 = { module = "androidx.paging:paging-runtime", version.ref = "paging3" }
+paging3-compose = { module = "androidx.paging:paging-compose", version.ref = "compose-paging3" }
 
 # compose
-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity"}
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui"}
-compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uiTooling"}
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-foundation"}
-compose-material = { module = "androidx.compose.material:material", version.ref = "compose-material"}
-compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewModel"}
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
+compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uiTooling" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-foundation" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose-material" }
+compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewModel" }
+compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "compose-coil" }
 
 [plugins]
-plugin-serialization = { id = "plugin.serialization", version.ref = "serialization"}
+plugin-serialization = { id = "plugin.serialization", version.ref = "serialization-plugins" }
