@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.paging3)
     implementation(libs.hilt)
     kapt(libs.hilt.kapt)
+    implementation(libs.compose.coil)
     implementation(libs.compose.ui)
     implementation(libs.compose.uiTooling)
     implementation(libs.compose.viewModel)

@@ -17,6 +17,7 @@ compose-uiTooling = "1.4.3"
 compose-foundation = "1.4.3"
 compose-material = "1.4.3"
 compose-viewModel = "2.6.1"
+compose-coil = "2.4.0"
 
 [libraries]
 fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment"}
@@ -37,6 +38,7 @@ compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-foundation"}
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose-material"}
 compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewModel"}
+compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "compose-coil"}
 
 [plugins]
 plugin-serialization = { id = "plugin.serialization", version.ref = "serialization-plugins"}
