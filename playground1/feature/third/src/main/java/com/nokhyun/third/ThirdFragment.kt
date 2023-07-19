@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.Text
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.nokhyun.third.databinding.FragmentThirdBinding
@@ -13,26 +15,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ThirdFragment : Fragment() {
 
-    private val thirdViewModel: ThirdViewModel  by viewModels()
-
-    private var _binding: FragmentThirdBinding? = null
-    private val binding: FragmentThirdBinding get() = _binding!!
+    private val thirdViewModel: ThirdViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentThirdBinding.inflate(layoutInflater)
-        return binding.run {
-            lifecycleOwner = this@ThirdFragment
-
-            root
+        return ComposeView(requireContext()).apply {
+            setContent {
+                Text("Hi Compose")
+            }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        thirdViewModel
     }
 }
 
-suspend fun logger(log: suspend () -> String) {
-    Log.e("logger", log())
+suspend fun logger(log: suspend () -> Any) {
+    Log.e("logger", log().toString())
 }

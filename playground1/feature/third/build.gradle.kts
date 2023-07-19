@@ -35,6 +35,11 @@ android {
     buildFeatures {
         buildConfig = true
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
 }
 
@@ -57,4 +62,10 @@ dependencies {
     implementation(libs.paging3)
     implementation(libs.hilt)
     kapt(libs.hilt.kapt)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.uiTooling)
+    implementation(libs.compose.viewModel)
+    implementation(libs.compose.material)
+//    implementation(libs.compose.activity)
+//    implementation(libs.compose.foundation)
 }
