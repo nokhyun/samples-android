@@ -1,10 +1,8 @@
 package com.nokhyun.third.composable
 
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,14 +29,7 @@ fun ThirdContent() {
             result[it]?.also { item ->
                 PassengerItem(
                     modifier = Modifier,
-                    airline = Airline(
-                        name = item.name,
-                        country = item.country,
-                        logo = item.logo,
-                        slogan = item.slogan,
-                        headQuaters = item.head_quaters,
-                        website = item.website
-                    )
+                    airline = item
                 )
             }
 
