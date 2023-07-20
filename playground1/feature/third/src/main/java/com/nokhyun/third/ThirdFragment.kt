@@ -13,9 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ThirdFragment : Fragment() {
-
-    private val thirdViewModel: ThirdViewModel by viewModels()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ComposeView(requireContext()).apply {
             setContent {
@@ -23,8 +20,4 @@ class ThirdFragment : Fragment() {
             }
         }
     }
-}
-
-suspend fun logger(log: suspend () -> Any) {
-    Log.e("logger", log().toString())
 }

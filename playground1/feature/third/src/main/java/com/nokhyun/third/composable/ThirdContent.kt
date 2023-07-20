@@ -1,5 +1,6 @@
 package com.nokhyun.third.composable
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
@@ -13,7 +14,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.nokhyun.third.ThirdViewModel
 
 @Composable
-fun ThirdContent() {
+internal fun ThirdContent() {
     val thirdViewModel = viewModel<ThirdViewModel>()
     val result = thirdViewModel.result.collectAsLazyPagingItems()
 
@@ -30,7 +31,9 @@ fun ThirdContent() {
                 PassengerItem(
                     modifier = Modifier,
                     airline = item
-                )
+                ){
+                    logger { "click!!!" }
+                }
             }
 
             if (!result.loadState.append.endOfPaginationReached) {
@@ -38,4 +41,8 @@ fun ThirdContent() {
             }
         }
     }
+}
+
+internal fun logger(log: () -> String){
+    Log.e("logger", log())
 }
