@@ -18,7 +18,7 @@ class ThirdViewModel @Inject constructor(
     passengerUseCase: FakePagingPassengerUseCase
 ) : ViewModel() {
 
-    val result: Flow<PagingData<com.nokhyun.third.composable.Airline>> = passengerUseCase()
+    val result: Flow<PagingData<AirlineUiState>> = passengerUseCase()
         .map {
             it.flatMap {
                 it.airline
@@ -28,7 +28,7 @@ class ThirdViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
-    private fun Airline.asAirLine() = com.nokhyun.third.composable.Airline(
+    private fun Airline.asAirLine(): AirlineUiState = AirlineUiState.Airline(
         name = this.name,
         country = this.country,
         logo = logo,
@@ -36,4 +36,19 @@ class ThirdViewModel @Inject constructor(
         headQuaters = head_quaters,
         website = website
     )
+}
+
+sealed class AirlineUiState {
+    data class Airline(
+        val name: String,
+        val country: String,
+        val logo: String,
+        val slogan: String,
+        val headQuaters: String,
+        val website: String
+    ) : AirlineUiState()
+}
+
+internal fun AirlineUiState.asAirline(): AirlineUiState.Airline? {
+    return if(this is AirlineUiState.Airline) this else null
 }

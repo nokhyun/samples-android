@@ -1,8 +1,6 @@
 package com.nokhyun.third.composable
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Indication
-import androidx.compose.foundation.IndicationInstance
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -20,44 +18,46 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import okhttp3.Interceptor
+import com.nokhyun.third.AirlineUiState
 
 @Composable
 fun PassengerItem(
     modifier: Modifier,
-    airline: Airline,
+    airline: AirlineUiState.Airline?,
     onClick: () -> Unit
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable(
-                indication = CustomIndication,
-                interactionSource = remember { MutableInteractionSource() },
-                onClick = onClick
-            )
-    ) {
-        AsyncImage(
-            modifier = Modifier
-                .border(BorderStroke(1.dp, Color.Black))
-                .align(CenterVertically),
-            model = airline.logo,
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight
-        )
-
-        Spacer(
+    airline?.also {
+        Row(
             modifier = modifier
-                .padding(start = 8.dp)
-        )
+                .fillMaxWidth()
+                .padding(8.dp)
+                .clickable(
+                    indication = CustomIndication,
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = onClick
+                )
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .border(BorderStroke(1.dp, Color.Black))
+                    .align(CenterVertically),
+                model = airline.logo,
+                contentDescription = null,
+                contentScale = ContentScale.FillHeight
+            )
 
-        Column {
-            Text(text = "name: ${airline.name}")
-            Text(text = "country: ${airline.country}")
-            Text(text = "slogan: ${airline.slogan}")
-            Text(text = "head_quaters: ${airline.headQuaters}")
-            Text(text = "website: ${airline.website}")
+            Spacer(
+                modifier = modifier
+                    .padding(start = 8.dp)
+            )
+
+            Column {
+                Text(text = "name: ${airline.name}")
+                Text(text = "country: ${airline.country}")
+                Text(text = "slogan: ${airline.slogan}")
+                Text(text = "head_quaters: ${airline.headQuaters}")
+                Text(text = "website: ${airline.website}")
+            }
         }
     }
 }
