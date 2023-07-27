@@ -26,6 +26,10 @@ internal fun ThirdContent() {
     val result = thirdViewModel.result.collectAsLazyPagingItems()
     val isVisible = result.loadState.refresh == LoadState.Loading
 
+    if(result.loadState.refresh is LoadState.Error){
+
+    }
+
     Box {
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.Center),
@@ -39,9 +43,6 @@ internal fun ThirdContent() {
             userScrollEnabled = true
         ) {
             items(result.itemCount) { index ->
-
-                result[index]
-
                 result[index]?.also { item ->
                     PassengerItem(
                         modifier = Modifier,
