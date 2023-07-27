@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nokhyun.first.databinding.FragmentFirstBinding
 import com.nokhyun.network.FakeService
@@ -82,7 +83,7 @@ class FirstFragment : Fragment() {
             logger { "rv apply" }
             setHasFixedSize(true)
             adapter = firstAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2)
         }
 //        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
         viewLifecycleOwner.lifecycleScope.launch {

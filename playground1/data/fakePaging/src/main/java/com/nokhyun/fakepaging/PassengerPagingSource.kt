@@ -1,5 +1,6 @@
 package com.nokhyun.fakepaging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.nokhyun.fakepaging.PassengerMapper.toEntity
@@ -27,6 +28,7 @@ internal class PassengerPagingSource(
                 nextKey = key + 1
             )
         } catch (e: Exception) {
+            Log.e("asdljlsa", "paging Error:$e")
             LoadResult.Error(e)
         }
     }
