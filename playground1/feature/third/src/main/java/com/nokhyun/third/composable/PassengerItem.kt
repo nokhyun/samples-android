@@ -1,5 +1,6 @@
 package com.nokhyun.third.composable
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -88,7 +89,7 @@ fun PassengerItem(
                 )
             }
 
-            if (airline.expended.value) {
+            AnimatedVisibility(visible = airline.expended.value) {
                 Spacer(modifier = Modifier.padding(8.dp))
                 Divider(
                     modifier = Modifier
