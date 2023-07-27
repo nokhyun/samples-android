@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,10 +45,9 @@ internal fun ThirdContent() {
                 result[index]?.also { item ->
                     PassengerItem(
                         modifier = Modifier,
-                        airline = item.asAirline()
+                        airline = item.asAirline(),
                     ) {
-                        // TODO result[index]
-                        logger { "click!!!" }
+                        item.asAirline()?.expended?.value = !item.asAirline()?.expended!!.value
                     }
                 }
 

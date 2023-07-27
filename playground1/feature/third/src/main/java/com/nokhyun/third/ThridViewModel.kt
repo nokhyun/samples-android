@@ -1,5 +1,8 @@
 package com.nokhyun.third
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -45,10 +48,11 @@ sealed class AirlineUiState {
         val logo: String,
         val slogan: String,
         val headQuaters: String,
-        val website: String
+        val website: String,
+        var expended: MutableState<Boolean> = mutableStateOf(false)
     ) : AirlineUiState()
 }
 
 internal fun AirlineUiState.asAirline(): AirlineUiState.Airline? {
-    return if(this is AirlineUiState.Airline) this else null
+    return if (this is AirlineUiState.Airline) this else null
 }
