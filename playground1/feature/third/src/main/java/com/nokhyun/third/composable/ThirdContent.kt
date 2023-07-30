@@ -8,8 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,16 +17,13 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.nokhyun.third.ThirdViewModel
 import com.nokhyun.third.asAirline
+import java.util.logging.Logger
 
 @Composable
 internal fun ThirdContent() {
     val thirdViewModel = viewModel<ThirdViewModel>()
     val result = thirdViewModel.result.collectAsLazyPagingItems()
     val isVisible = result.loadState.refresh == LoadState.Loading
-
-    if(result.loadState.refresh is LoadState.Error){
-
-    }
 
     Box {
         AnimatedVisibility(
@@ -38,24 +33,28 @@ internal fun ThirdContent() {
             CircularProgressIndicator()
         }
 
-        LazyColumn(
-            contentPadding = PaddingValues(8.dp),
-            userScrollEnabled = true
-        ) {
-            items(result.itemCount) { index ->
-                result[index]?.also { item ->
-                    PassengerItem(
-                        modifier = Modifier,
-                        airline = item.asAirline(),
-                    ) {
-                        item.asAirline()?.expended?.value = !item.asAirline()?.expended!!.value
+        if (result.loadState.refresh !is LoadState.Error) {
+            LazyColumn(
+                contentPadding = PaddingValues(8.dp),
+                userScrollEnabled = true
+            ) {
+                items(result.itemCount) { index ->
+                    result[index]?.also { item ->
+                        PassengerItem(
+                            modifier = Modifier,
+                            airline = item.asAirline(),
+                        ) {
+                            item.asAirline()?.expended?.value = !item.asAirline()?.expended!!.value
+                        }
+                    }
+
+                    if (!result.loadState.append.endOfPaginationReached) {
+                        Divider(color = Color.Black, thickness = 1.dp)
                     }
                 }
-
-                if (!result.loadState.append.endOfPaginationReached) {
-                    Divider(color = Color.Black, thickness = 1.dp)
-                }
             }
+        }else {
+            logger { "paging Error!!!" }
         }
     }
 }
