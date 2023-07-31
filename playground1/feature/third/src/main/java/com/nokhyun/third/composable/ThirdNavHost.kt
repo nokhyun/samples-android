@@ -53,11 +53,11 @@ internal fun NavGraphBuilder.singleComposable(
     onEvent: () -> Unit,
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
-    composable(route) {
-        if (navHostController.currentDestination?.route!! != it.destination.route) {
+    composable(route, arguments, deepLinks) { navBackStackEntry ->
+        if (navHostController.currentDestination?.route!! != navBackStackEntry.destination.route) {
             onEvent()
         }
 
-        content(it)
+        content(navBackStackEntry)
     }
 }
