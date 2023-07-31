@@ -19,6 +19,7 @@ compose-material = "1.4.3"
 compose-viewModel = "2.6.1"
 compose-coil = "2.4.0"
 compose-paging3 = "3.2.0-rc01"
+compose-navigation = "2.6.0"
 
 [libraries]
 fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
@@ -41,6 +42,7 @@ compose-foundation = { module = "androidx.compose.foundation:foundation", versio
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose-material" }
 compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewModel" }
 compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "compose-coil" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation"}
 
 [plugins]
 plugin-serialization = { id = "plugin.serialization", version.ref = "serialization-plugins" }

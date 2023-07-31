@@ -1,7 +1,6 @@
 package com.nokhyun.third
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,14 +11,37 @@ import androidx.paging.map
 import com.nokhyun.passenger.Airline
 import com.nokhyun.passenger.FakePagingPassengerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 @HiltViewModel
-class ThirdViewModel @Inject constructor(
+internal class ThirdViewModel @Inject constructor(
     passengerUseCase: FakePagingPassengerUseCase
 ) : ViewModel() {
+
+    val atomicInteger = AtomicInteger()
+
+    private val _detailScreen: MutableStateFlow<DetailScreenState> = MutableStateFlow(DetailScreenState.Default)
+    val detailScreen: StateFlow<DetailScreenState> = _detailScreen.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DetailScreenState.Default)
+
+    private fun <T> MutableStateFlow<T>.emitter(state: T) {
+        viewModelScope.ensureActive()
+        viewModelScope.launch {
+            this@emitter.value = state
+        }
+    }
+
+    fun detailScreen(state: DetailScreenState) {
+        _detailScreen.emitter(state)
+    }
 
     val result: Flow<PagingData<AirlineUiState>> = passengerUseCase()
         .map {
@@ -55,4 +77,9 @@ sealed class AirlineUiState {
 
 internal fun AirlineUiState.asAirline(): AirlineUiState.Airline? {
     return if (this is AirlineUiState.Airline) this else null
+}
+
+internal sealed class DetailScreenState {
+    object Default : DetailScreenState()
+    object Detail : DetailScreenState()
 }

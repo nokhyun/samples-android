@@ -38,7 +38,7 @@ kapt {
 }
 
 dependencies {
-    implementation(project(":core:network"))
+    compileOnly(project(":core:network"))
     implementation(project(":domain:passenger"))
 
     testImplementation("junit:junit:4.13.2")

@@ -36,12 +36,14 @@ import com.nokhyun.third.R
 fun PassengerItem(
     modifier: Modifier,
     airline: AirlineUiState.Airline?,
+    onNavigateScreen: () -> Unit,
     onClick: () -> Unit
 ) {
     airline?.also {
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .clickable(onClick = onNavigateScreen)
         ) {
             Row(
                 modifier = Modifier
@@ -86,7 +88,6 @@ fun PassengerItem(
 
                 Image(
                     modifier = Modifier
-                        .weight(0.1f)
                         .rotate(if (airline.expended.value) 90f else 270f)
                         .clickable(
                             indication = CustomIndication,
@@ -128,6 +129,7 @@ fun PassengerItemPreview() {
             headQuaters = "",
             website = ""
         ),
+        onNavigateScreen = {},
         onClick = {}
     )
 }
