@@ -36,12 +36,14 @@ import com.nokhyun.third.R
 fun PassengerItem(
     modifier: Modifier,
     airline: AirlineUiState.Airline?,
+    onNavigateScreen: () -> Unit,
     onClick: () -> Unit
 ) {
     airline?.also {
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .clickable(onClick = onNavigateScreen)
         ) {
             Row(
                 modifier = Modifier
@@ -128,6 +130,7 @@ fun PassengerItemPreview() {
             headQuaters = "",
             website = ""
         ),
+        onNavigateScreen = {},
         onClick = {}
     )
 }
