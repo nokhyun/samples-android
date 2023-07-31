@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ThirdDetailScreen() {
+    logger { "ThirdDetailScreen" }
     Box(
         modifier = Modifier
             .fillMaxSize()

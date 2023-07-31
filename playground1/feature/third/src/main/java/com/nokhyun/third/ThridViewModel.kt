@@ -19,12 +19,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ThirdViewModel @Inject constructor(
     passengerUseCase: FakePagingPassengerUseCase
 ) : ViewModel() {
+
+    val atomicInteger = AtomicInteger()
 
     private val _detailScreen: MutableStateFlow<DetailScreenState> = MutableStateFlow(DetailScreenState.Default)
     val detailScreen: StateFlow<DetailScreenState> = _detailScreen.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DetailScreenState.Default)

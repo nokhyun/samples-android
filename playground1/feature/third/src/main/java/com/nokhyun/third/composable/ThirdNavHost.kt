@@ -2,6 +2,10 @@ package com.nokhyun.third.composable
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,11 +23,16 @@ fun ThirdNavHost(
             ThirdContent(
                 thirdViewModel
             ) {
+                logger {
+                    "value: ${thirdViewModel.atomicInteger.get()}"
+                }
                 navController.navigate(ThirdRoute.Detail.route)
             }
         }
 
-        composable(ThirdRoute.Detail.route) {
+        singleComposable(ThirdRoute.Detail.route, navHostController = navController, onEvent = {
+            thirdViewModel.atomicInteger.getAndIncrement()
+        }) { navBackStackEntry ->
             ThirdDetailScreen()
         }
     }
@@ -34,4 +43,21 @@ internal sealed class ThirdRoute(
 ) {
     object Default : ThirdRoute(route = "Default")
     object Detail : ThirdRoute(route = "Detail")
+}
+
+internal fun NavGraphBuilder.singleComposable(
+    route: String,
+    arguments: List<NamedNavArgument> = emptyList(),
+    deepLinks: List<NavDeepLink> = emptyList(),
+    navHostController: NavHostController,
+    onEvent: () -> Unit,
+    content: @Composable (NavBackStackEntry) -> Unit
+) {
+    composable(route) {
+        if (navHostController.currentDestination?.route!! != it.destination.route) {
+            onEvent()
+        }
+
+        content(it)
+    }
 }
