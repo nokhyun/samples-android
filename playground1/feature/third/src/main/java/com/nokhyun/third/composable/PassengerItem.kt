@@ -88,7 +88,6 @@ fun PassengerItem(
 
                 Image(
                     modifier = Modifier
-                        .weight(0.1f)
                         .rotate(if (airline.expended.value) 90f else 270f)
                         .clickable(
                             indication = CustomIndication,
