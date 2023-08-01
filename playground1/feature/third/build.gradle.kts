@@ -25,6 +25,8 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -69,6 +71,7 @@ dependencies {
     implementation(libs.compose.viewModel)
     implementation(libs.compose.material)
     implementation(libs.compose.navigation)
+    implementation(libs.compose.vico)
 //    implementation(libs.compose.activity)
 //    implementation(libs.compose.foundation)
 }

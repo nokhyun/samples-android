@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -26,8 +27,6 @@ import javax.inject.Inject
 internal class ThirdViewModel @Inject constructor(
     passengerUseCase: FakePagingPassengerUseCase
 ) : ViewModel() {
-
-    val atomicInteger = AtomicInteger()
 
     private val _detailScreen: MutableStateFlow<DetailScreenState> = MutableStateFlow(DetailScreenState.Default)
     val detailScreen: StateFlow<DetailScreenState> = _detailScreen.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DetailScreenState.Default)
@@ -50,6 +49,9 @@ internal class ThirdViewModel @Inject constructor(
             }.map {
                 it.asAirLine()
             }
+        }
+        .catch {
+            it.printStackTrace()
         }
         .cachedIn(viewModelScope)
 
