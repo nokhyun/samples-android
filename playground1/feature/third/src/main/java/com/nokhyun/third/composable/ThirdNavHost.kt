@@ -23,15 +23,12 @@ fun ThirdNavHost(
             ThirdContent(
                 thirdViewModel
             ) {
-                logger {
-                    "value: ${thirdViewModel.atomicInteger.get()}"
-                }
                 navController.navigate(ThirdRoute.Detail.route)
             }
         }
 
         singleComposable(ThirdRoute.Detail.route, navHostController = navController, onEvent = {
-            thirdViewModel.atomicInteger.getAndIncrement()
+            // TODO
         }) { navBackStackEntry ->
             ThirdDetailScreen()
         }

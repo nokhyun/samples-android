@@ -47,7 +47,7 @@ fun ThirdDetailScreen() {
                 elevationOverlayColor = Color.Transparent
             )
         }) {
-            SampleChartScreen(valueFormatter = valueFormatterFromToday(), start = valueFormatterEntries())
+            SampleChartScreen(valueFormatter = valueFormatterFromToday(), valueFormatterEntries = valueFormatterEntries())
         }
     }
 }

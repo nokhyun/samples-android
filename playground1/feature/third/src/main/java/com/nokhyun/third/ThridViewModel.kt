@@ -28,8 +28,6 @@ internal class ThirdViewModel @Inject constructor(
     passengerUseCase: FakePagingPassengerUseCase
 ) : ViewModel() {
 
-    val atomicInteger = AtomicInteger()
-
     private val _detailScreen: MutableStateFlow<DetailScreenState> = MutableStateFlow(DetailScreenState.Default)
     val detailScreen: StateFlow<DetailScreenState> = _detailScreen.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DetailScreenState.Default)
 

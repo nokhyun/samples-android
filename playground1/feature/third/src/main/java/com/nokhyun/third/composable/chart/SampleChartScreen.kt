@@ -37,7 +37,7 @@ import com.patrykandpatrick.vico.core.util.RandomEntriesGenerator
 fun SampleChartScreen(
     chartColors: List<Color> = listOf(Color.Yellow, Color.Blue),
     valueFormatter: AxisValueFormatter<AxisPosition.Horizontal.Bottom>,
-    start: AxisValueFormatter<AxisPosition.Vertical.Start>
+    valueFormatterEntries: AxisValueFormatter<AxisPosition.Vertical.Start>
 ) {
     val values = listOf<Int>(4, 12, 8, 16)
 
@@ -102,20 +102,10 @@ fun SampleChartScreen(
                     defaultLines.map { it.copy(lineBackgroundShader = null) }
                 }
             ),
-//            chartModelProducer = multiDataSetChartEntryModelProducer,
-            chartModelProducer = run {
-                chartEntryModelProducer1.plus(chartEntryModelProducer2)
-            },
+            chartModelProducer = chartEntryModelProducer1.plus(chartEntryModelProducer2),
             startAxis = startAxis(
                 maxLabelCount = 4,
-                valueFormatter = start,
-//                valueFormatter = AxisValueFormatter<AxisPosition.Vertical.Start> { value, _ ->
-//                    values.filterIndexed {
-//                        it < atomicInteger.get()
-//                    }.map {
-//                        atomicInteger.incrementAndGet()
-//                    }.toString()
-//                },
+                valueFormatter = valueFormatterEntries,
                 label = axisLabelComponent(
                     color = Color.Black,
                 ),

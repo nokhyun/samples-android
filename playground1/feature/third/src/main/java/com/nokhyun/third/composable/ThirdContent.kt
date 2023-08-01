@@ -36,29 +36,35 @@ internal fun ThirdContent(
             CircularProgressIndicator()
         }
 
-        if (result.loadState.refresh !is LoadState.Error) {
-            LazyColumn(
-                contentPadding = PaddingValues(8.dp),
-                userScrollEnabled = true
-            ) {
-                items(result.itemCount) { index ->
-                    result[index]?.also { item ->
-                        PassengerItem(
-                            modifier = Modifier,
-                            airline = item.asAirline(),
-                            onNavigateScreen = onNavigateScreen
-                        ) {
-                            item.asAirline()?.expended?.value = !item.asAirline()?.expended!!.value
+        when (result.loadState.refresh) {
+            !is LoadState.Error -> {
+                LazyColumn(
+                    contentPadding = PaddingValues(8.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(result.itemCount) { index ->
+                        result[index]?.also { item ->
+                            PassengerItem(
+                                modifier = Modifier,
+                                airline = item.asAirline(),
+                                onNavigateScreen = onNavigateScreen
+                            ) {
+                                item.asAirline()?.expended?.value = !item.asAirline()?.expended!!.value
+                            }
                         }
-                    }
 
-                    if (!result.loadState.append.endOfPaginationReached) {
-                        Divider(color = Color.Black, thickness = 1.dp)
+                        if (!result.loadState.append.endOfPaginationReached) {
+                            Divider(color = Color.Black, thickness = 1.dp)
+                        }
                     }
                 }
             }
-        } else {
-            logger { "paging Error!!!" }
+
+            else -> {
+                RetryScreen {
+                    result.retry()
+                }
+            }
         }
     }
 }
