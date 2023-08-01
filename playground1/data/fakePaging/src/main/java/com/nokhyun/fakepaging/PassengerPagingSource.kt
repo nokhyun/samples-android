@@ -5,6 +5,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.nokhyun.fakepaging.PassengerMapper.toEntity
 import kotlinx.coroutines.flow.first
+import java.net.UnknownHostException
 
 internal class PassengerPagingSource(
     private val fakePagingRemoteDataSource: FakePagingRemoteDataSource
@@ -14,14 +15,14 @@ internal class PassengerPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, com.nokhyun.passenger.Passenger> {
         val key = params.key ?: 0
 
-        val result = fakePagingRemoteDataSource.fetchPassenger(
-            PassengerData(
-                page = key,
-                size = 10
-            )
-        ).first()
-
         return try {
+            val result = fakePagingRemoteDataSource.fetchPassenger(
+                PassengerData(
+                    page = key,
+                    size = 10
+                )
+            ).first()
+
             LoadResult.Page(
                 data = result.data.map { it.toEntity() },
                 prevKey = null,
