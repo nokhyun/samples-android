@@ -28,6 +28,8 @@ fun ThirdDetailScreen() {
         contentAlignment = Alignment.Center
     ) {
 
+        val thirdValueFormatter = ThirdValueFormatter()
+
         val lineChart = lineChart()
 
         ProvideChartStyle(remember(lineChart) {
@@ -47,7 +49,10 @@ fun ThirdDetailScreen() {
                 elevationOverlayColor = Color.Transparent
             )
         }) {
-            SampleChartScreen(valueFormatter = valueFormatterFromToday(), valueFormatterEntries = valueFormatterEntries())
+            SampleChartScreen(
+                valueFormatter = thirdValueFormatter.create(ThirdValueFormatter.Type.BOTTOM_VALUE),
+                valueFormatterEntries = thirdValueFormatter.create(ThirdValueFormatter.Type.START_VALUE)
+            )
         }
     }
 }
@@ -58,12 +63,18 @@ fun ThirdDetailScreenPreview() {
     ThirdDetailScreen()
 }
 
-private fun <T: AxisPosition> valueFormatterEntries(): AxisValueFormatter<T>{
+/**
+ * @see  StartValueFormatter
+ * */
+private fun <T : AxisPosition> valueFormatterEntries(): AxisValueFormatter<T> {
     return AxisValueFormatter { value, _ ->
         value.toInt().toString()
     }
 }
 
+/**
+ * @see TodayHorizontalValueFormatter
+ * */
 private fun <T : AxisPosition> valueFormatterFromToday(): AxisValueFormatter<T> {
     return AxisValueFormatter { value, _ ->
         LocalDate.now().plusDays(value.toLong()).format(DateTimeFormatter.ofPattern("M월 d일"))
