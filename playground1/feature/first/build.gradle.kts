@@ -68,4 +68,6 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hilt.kapt)
+
+    implementation("com.github.nokhyun:NokhyunPermission:1.0.0")
 }
