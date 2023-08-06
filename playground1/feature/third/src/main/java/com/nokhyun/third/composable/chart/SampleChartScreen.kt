@@ -36,8 +36,8 @@ import com.patrykandpatrick.vico.core.util.RandomEntriesGenerator
 @Composable
 fun SampleChartScreen(
     chartColors: List<Color> = listOf(Color.Yellow, Color.Blue),
-    valueFormatter: AxisValueFormatter<AxisPosition.Horizontal.Bottom>,
-    valueFormatterEntries: AxisValueFormatter<AxisPosition.Vertical.Start>
+    valueFormatter: AxisValueFormatter<out AxisPosition>,
+    valueFormatterEntries: AxisValueFormatter<out AxisPosition>
 ) {
     val values = listOf<Int>(4, 12, 8, 16)
 
@@ -94,6 +94,7 @@ fun SampleChartScreen(
     }) {
         val defaultLines = currentChartStyle.lineChart.lines
 
+        @Suppress("UNCHECKED_CAST")
         Chart(
             modifier = Modifier
                 .background(Color.Gray),
@@ -105,14 +106,14 @@ fun SampleChartScreen(
             chartModelProducer = chartEntryModelProducer1.plus(chartEntryModelProducer2),
             startAxis = startAxis(
                 maxLabelCount = 4,
-                valueFormatter = valueFormatterEntries,
+                valueFormatter = valueFormatterEntries as AxisValueFormatter<AxisPosition.Vertical.Start>,
                 label = axisLabelComponent(
                     color = Color.Black,
                 ),
                 horizontalLabelPosition = VerticalAxis.HorizontalLabelPosition.Outside
             ),
             bottomAxis = bottomAxis(
-                valueFormatter = valueFormatter
+                valueFormatter = valueFormatter as AxisValueFormatter<AxisPosition.Horizontal.Bottom>
             )
         )
     }
