@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -29,6 +30,7 @@ internal fun ThirdContent(
         modifier = Modifier
             .fillMaxSize()
     ) {
+        LocalContext
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.Center),
             visible = isVisible

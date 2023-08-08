@@ -1,5 +1,6 @@
 package com.nokhyun.first
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nokhyun.first.databinding.FragmentFirstBinding
 import com.nokhyun.network.FakeService
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,6 +72,8 @@ class FirstFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initRootView()
+
         postponeEnterTransition()
         (binding.root.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
@@ -98,6 +103,38 @@ class FirstFragment : Fragment() {
 
     private fun startActivity(klass: Class<*>) {
         startActivity(Intent(requireContext(), klass))
+    }
+
+    private fun initRootView() {
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
+        ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.etKeyboard!!,
+            TranslateDeferringInsetsAnimationCallback(
+                view = binding.etKeyboard!!,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+        )
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.rvFirst!!,
+            TranslateDeferringInsetsAnimationCallback(
+                view = binding.rvFirst!!,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+        )
+
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.etKeyboard!!,
+            ControlFocusInsetsAnimationCallback(binding.etKeyboard!!)
+        )
     }
 }
 
