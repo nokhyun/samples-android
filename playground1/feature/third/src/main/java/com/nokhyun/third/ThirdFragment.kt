@@ -28,12 +28,12 @@ class ThirdFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                TestDialog(
-                    onDismissRequest = { },
-                    context = LocalContext.current
-                    ) {
-                    Text(text = "asdl;k;jasdlkjaskl")
-                }
+//                TestDialog(
+//                    onDismissRequest = { },
+//                    context = LocalContext.current
+//                    ) {
+//                    Text(text = "asdl;k;jasdlkjaskl")
+//                }
                 ThirdNavHost()
             }
         }
