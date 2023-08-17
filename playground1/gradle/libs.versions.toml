@@ -21,6 +21,7 @@ compose-coil = "2.4.0"
 compose-paging3 = "3.2.0-rc01"
 compose-navigation = "2.6.0"
 compose-vico = "1.8.0"
+compose-material3 = "1.1.1"
 
 [libraries]
 fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
@@ -34,6 +35,7 @@ hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-kapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 paging3 = { module = "androidx.paging:paging-runtime", version.ref = "paging3" }
 paging3-compose = { module = "androidx.paging:paging-compose", version.ref = "compose-paging3" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3"}
 
 # compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
