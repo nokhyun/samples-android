@@ -45,6 +45,8 @@ compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose",
 compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "compose-coil" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation"}
 compose-vico = { module = "com.patrykandpatrick.vico:compose-m2", version.ref = "compose-vico"}
+customview-poolingcontainer = { group = "androidx.customview", name = "customview-poolingcontainer", version = "1.0.0" }
+ui-android = { group = "androidx.compose.ui", name = "ui-android", version = "1.5.0" }
 
 [plugins]
 plugin-serialization = { id = "plugin.serialization", version.ref = "serialization-plugins" }
