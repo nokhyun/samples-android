@@ -20,15 +20,15 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "tossClientKey", properties.getProperty("tossClientKey"))
-            buildConfigField("String", "tossSecretKey", properties.getProperty("tossSecretKey"))
+//            buildConfigField("String", "tossClientKey", properties.getProperty("tossClientKey"))
+//            buildConfigField("String", "tossSecretKey", properties.getProperty("tossSecretKey"))
         }
 
         debug {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "tossClientKey", properties.getProperty("tossClientKey"))
-            buildConfigField("String", "tossSecretKey", properties.getProperty("tossSecretKey"))
+//            buildConfigField("String", "tossClientKey", properties.getProperty("tossClientKey"))
+//            buildConfigField("String", "tossSecretKey", properties.getProperty("tossSecretKey"))
         }
     }
     compileOptions {
