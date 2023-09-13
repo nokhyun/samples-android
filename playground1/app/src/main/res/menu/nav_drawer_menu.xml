@@ -19,4 +19,10 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/menu_third"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_ui_exam"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/menu_ui_exam"
+        app:showAsAction="always" />
 </menu>

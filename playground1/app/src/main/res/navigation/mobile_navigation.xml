@@ -11,4 +11,5 @@
         android:name="com.nokhyun.second.SecondFragment" />
 
     <include app:graph="@navigation/nav_third" />
+    <include app:graph="@navigation/nav_ui_exam" />
 </navigation>
