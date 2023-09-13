@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.nokhyun.uiexam.text.AnnotatedClickableText
+import com.nokhyun.uiexam.text.DifferentFonts
 
 @Composable
 fun UiExamContent() {
@@ -30,5 +31,7 @@ fun UiExamContent() {
 
             AnnotatedClickableText()
         }
+
+        DifferentFonts()
     }
 }
