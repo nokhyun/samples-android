@@ -5,8 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.nokhyun.passenger.FakePagingRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-internal class FakePagingRepositoryImpl(
+internal class FakePagingRepositoryImpl @Inject constructor(
     private val remoteDataSource: FakePagingRemoteDataSource
 ) : FakePagingRepository {
     override fun fetchPassenger(): Flow<PagingData<com.nokhyun.passenger.Passenger>> {

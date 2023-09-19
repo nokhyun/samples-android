@@ -8,7 +8,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+annotation class FakePaging
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -16,13 +20,6 @@ internal object FakePagingModule {
 
     @Provides
     @Singleton
-    fun provideFakePagingService(serviceFactory: ServiceFactory) = serviceFactory.create("https://api.instantwebtools.net", FakePagingService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideFakePagingRepository(fakePagingRemoteDataSource: FakePagingRemoteDataSource): FakePagingRepository = FakePagingRepositoryImpl(fakePagingRemoteDataSource)
-
-    @Provides
-    @Singleton
-    fun provideFakePagingRemoteDataSource(service: FakePagingService): FakePagingRemoteDataSource = FakePagingRemoteDataSourceImpl(service)
+    @FakePaging
+    fun provideFakePagingService(serviceFactory: ServiceFactory): FakePagingService = serviceFactory.create("https://api.instantwebtools.net", FakePagingService::class.java)
 }
