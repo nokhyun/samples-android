@@ -1,4 +1,4 @@
-package com.nokhyun.network.interceptors
+package com.nokhyun.network_impl.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Response

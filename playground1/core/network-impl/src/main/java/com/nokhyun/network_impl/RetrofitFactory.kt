@@ -1,4 +1,4 @@
-package com.nokhyun.network
+package com.nokhyun.network_impl
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json

@@ -1,15 +1,18 @@
 package com.nokhyun.fakepaging
 
+import com.nokhyun.network_paging.Airline
+import com.nokhyun.network_paging.Passenger
+import com.nokhyun.network_paging.PassengerResponse
 import com.nokhyun.passenger.PassengerEntity
 
 internal object PassengerMapper {
-    fun PassengerResponse.toEntity() = PassengerEntity(
+    fun com.nokhyun.network_paging.PassengerResponse.toEntity() = PassengerEntity(
         totalPassengers = totalPassengers,
         totalPages = totalPages,
         data = data.map { it.toEntity() }
     )
 
-    fun Passenger.toEntity() = com.nokhyun.passenger.Passenger(
+    fun com.nokhyun.network_paging.Passenger.toEntity() = com.nokhyun.passenger.Passenger(
         _id = _id,
         name = name,
         trips = trips,
@@ -17,7 +20,7 @@ internal object PassengerMapper {
         __v = __v
     )
 
-    private fun Airline.toEntity() = com.nokhyun.passenger.Airline(
+    private fun com.nokhyun.network_paging.Airline.toEntity() = com.nokhyun.passenger.Airline(
         id = id,
         name = name,
         country = country,

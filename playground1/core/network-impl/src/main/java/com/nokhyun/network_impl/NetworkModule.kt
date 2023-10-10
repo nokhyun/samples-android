@@ -1,6 +1,9 @@
-package com.nokhyun.network
+package com.nokhyun.network_impl
 
-import com.nokhyun.network.annotations.OtherInterceptor
+import com.nokhyun.network_paging.FakePagingService
+import com.nokhyun.network.FakeService
+import com.nokhyun.network_paging.annotations.FakePaging
+import com.nokhyun.network_impl.annotations.OtherInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +24,7 @@ internal object NetworkModule {
     @OtherInterceptor
     @Provides
     @Singleton
-    fun provideOtherInterceptor() = com.nokhyun.network.interceptors.OtherInterceptor()
+    fun provideOtherInterceptor() = com.nokhyun.network_impl.interceptors.OtherInterceptor()
 
     @Provides
     @Singleton
@@ -29,8 +32,13 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
+    @FakePaging
+    fun provideFakePagingService(serviceFactory: ServiceFactory): FakePagingService = serviceFactory.create("https://api.instantwebtools.net", FakePagingService::class.java)
+
+    @Provides
+    @Singleton
     fun provideOtherInterceptorOkHttpClient(
-        @OtherInterceptor otherInterceptor: com.nokhyun.network.interceptors.OtherInterceptor
+        @OtherInterceptor otherInterceptor: com.nokhyun.network_impl.interceptors.OtherInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
