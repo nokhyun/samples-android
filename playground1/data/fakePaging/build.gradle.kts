@@ -38,7 +38,7 @@ kapt {
 }
 
 dependencies {
-    compileOnly(project(":core:network"))
+    implementation(project(":core:network-paging"))
     implementation(project(":domain:passenger"))
 
     testImplementation("junit:junit:4.13.2")

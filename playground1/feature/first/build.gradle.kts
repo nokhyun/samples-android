@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.compose.viewModel)
     implementation(project(mapOf("path" to ":core:network")))
+    implementation(project(mapOf("path" to ":core:network-impl")))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

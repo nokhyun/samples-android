@@ -14,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nokhyun.first.databinding.FragmentFirstBinding
 import com.nokhyun.network.FakeService
 import dagger.hilt.android.AndroidEntryPoint

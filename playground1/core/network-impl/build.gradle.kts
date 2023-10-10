@@ -1,14 +1,20 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization") version "1.8.22"
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.nokhyun.network"
+    namespace = "com.nokhyun.network_impl"
     compileSdk = 33
+
+    defaultConfig {
+        minSdk = 24
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
 
     buildTypes {
         release {
@@ -30,6 +36,12 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":core:network"))
+    implementation(project(":core:network-paging"))
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.serializationAdapater)
+    implementation(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.serializationConverter)
     implementation(libs.hilt)

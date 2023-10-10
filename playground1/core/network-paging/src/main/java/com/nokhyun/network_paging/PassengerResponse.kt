@@ -1,4 +1,4 @@
-package com.nokhyun.fakepaging
+package com.nokhyun.network_paging
 
 import kotlinx.serialization.Serializable
 
