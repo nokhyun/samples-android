@@ -46,6 +46,7 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":core:network"))
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -57,8 +58,6 @@ dependencies {
     implementation(libs.compose.material)
     implementation(libs.compose.foundation)
     implementation(libs.compose.viewModel)
-    implementation(project(mapOf("path" to ":core:network")))
-    implementation(project(mapOf("path" to ":core:network-impl")))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

@@ -47,6 +47,7 @@ kapt {
 }
 
 dependencies {
+    runtimeOnly(project(":core:network-impl"))
     implementation(project(":feature:first"))
     implementation(project(":feature:second"))
     implementation(project(":feature:third"))
