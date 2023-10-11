@@ -1,1 +1,1 @@
-![playground](https://github.com/nokhyun/samples-android/assets/59673248/907a6c84-5e03-4465-b1d5-795c4acbdb5d)
+![playground](https://github.com/nokhyun/samples-android/assets/59673248/a596b3fd-29cf-427b-899f-1948c687b148)
