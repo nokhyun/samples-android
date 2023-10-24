@@ -19,7 +19,6 @@ class UiExamFragment : Fragment() {
             setContent {
 //                UiExamContent()
                 BlurContents(
-                    modifier = Modifier,
                     parent = rootView
                 )
             }

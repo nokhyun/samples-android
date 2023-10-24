@@ -14,27 +14,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun BlurContents(
-    modifier: Modifier,
     parent: ViewGroup
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Black
     ) {
-        val context = LocalContext.current
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .horizontalScroll(rememberScrollState())
         ) {
+            // TODO Change drawable
             Image(
                 painter = painterResource(id = R.drawable.baseline_android_24),
                 contentDescription = "background",
