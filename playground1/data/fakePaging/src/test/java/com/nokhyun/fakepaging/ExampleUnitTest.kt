@@ -10,8 +10,17 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    private lateinit var test: String
+
+//    @Test
+//    fun addition_isCorrect() {
+//        assertEquals(4, 2 + 2)
+//    }
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun `LATE_INIT_체크`(){
+        test = ""
+        assertEquals(true, ::test.isInitialized)
     }
 }
