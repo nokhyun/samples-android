@@ -5,9 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.nokhyun.uiexam.immutableExam.PeopleView
+import com.nokhyun.uiexam.immutableExam.Person
 
 class UiExamFragment : Fragment() {
 
@@ -18,9 +19,19 @@ class UiExamFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
 //                UiExamContent()
-                BlurContents(
-                    parent = rootView
+//                BlurContents(
+//                    parent = rootView
+//                )
+
+                val person1 = Person("Hi1", "1234")
+                val person2 = Person("Hi2", "5678")
+                val list1 = mutableListOf<Person>(
+                    person1,
+                    person2,
                 )
+
+
+                PeopleView(people = list1.apply { add(Person("1123", "123")) })
             }
         }
     }
