@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.nokhyun.uiexam.immutableExam.PeopleView
@@ -31,7 +32,12 @@ class UiExamFragment : Fragment() {
                 )
 
 
-                PeopleView(people = list1.apply { add(Person("1123", "123")) })
+//                PeopleView(people = list1.apply { add(Person("1123", "123")) })
+
+                Column {
+                    App()
+                    App(User("Park"))
+                }
             }
         }
     }
