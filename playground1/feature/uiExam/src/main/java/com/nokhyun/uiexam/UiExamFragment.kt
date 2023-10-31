@@ -5,10 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.nokhyun.uiexam.immutableExam.PeopleView
 import com.nokhyun.uiexam.immutableExam.Person
 
 class UiExamFragment : Fragment() {
@@ -33,11 +33,13 @@ class UiExamFragment : Fragment() {
 
 
 //                PeopleView(people = list1.apply { add(Person("1123", "123")) })
+                    
+//                Column {
+//                    App()
+//                    App(User("Park"))
+//                }
 
-                Column {
-                    App()
-                    App(User("Park"))
-                }
+                SaveableStateHolderExam()
             }
         }
     }
