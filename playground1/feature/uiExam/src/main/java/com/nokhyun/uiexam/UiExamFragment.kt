@@ -5,19 +5,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composition
+import androidx.compose.runtime.CompositionContext
+import androidx.compose.runtime.InternalComposeApi
+import androidx.compose.runtime.Recomposer
+import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.nokhyun.uiexam.exams.GroupNode
+import com.nokhyun.uiexam.exams.runApp
 import com.nokhyun.uiexam.immutableExam.Person
+import kotlinx.coroutines.Dispatchers
 
 class UiExamFragment : Fragment() {
 
+    @OptIn(InternalComposeApi::class)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val decorView = requireActivity().window?.decorView
         val rootView = decorView?.findViewById<ViewGroup>(android.R.id.content)!!
 
         return ComposeView(requireContext()).apply {
+
             setContent {
 //                UiExamContent()
 //                BlurContents(
@@ -33,13 +42,15 @@ class UiExamFragment : Fragment() {
 
 
 //                PeopleView(people = list1.apply { add(Person("1123", "123")) })
-                    
+
 //                Column {
 //                    App()
 //                    App(User("Park"))
 //                }
 
-                SaveableStateHolderExam()
+//                SaveableStateHolderExam()
+
+//                runApp(GroupNode(), Recomposer(Dispatchers.Main))
             }
         }
     }

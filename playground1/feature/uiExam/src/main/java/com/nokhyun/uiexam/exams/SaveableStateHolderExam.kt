@@ -1,4 +1,4 @@
-package com.nokhyun.uiexam
+package com.nokhyun.uiexam.exams
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

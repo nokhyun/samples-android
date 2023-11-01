@@ -21,7 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_bright"
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                android:visibility="gone" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/my_nav_host_fragment"

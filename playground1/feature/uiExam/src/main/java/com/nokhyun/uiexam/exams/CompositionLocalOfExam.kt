@@ -1,10 +1,11 @@
-package com.nokhyun.uiexam
+package com.nokhyun.uiexam.exams
 
 import android.annotation.SuppressLint
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import com.nokhyun.uiexam.logger
 
 data class User(val name: String)
 
