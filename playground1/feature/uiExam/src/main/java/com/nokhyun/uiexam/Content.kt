@@ -58,7 +58,7 @@ fun UiExamContent() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HorizontalViewPager() {
-    val pagerState = rememberPagerState(initialPage = 0)
+    val pagerState = rememberPagerState{0}
     val coroutineScope = rememberCoroutineScope()
     val pageCount = 10
 
@@ -83,7 +83,7 @@ fun HorizontalViewPager() {
         HorizontalPager(
             modifier = Modifier
                 .background(Color.LightGray),
-            pageCount = 10,
+//            pageCount = 10,
             state = pagerState
         ) { page ->
             Text(

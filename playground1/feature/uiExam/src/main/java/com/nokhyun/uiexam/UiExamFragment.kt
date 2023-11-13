@@ -1,12 +1,22 @@
 package com.nokhyun.uiexam
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 
 class UiExamFragment : Fragment() {
@@ -15,12 +25,28 @@ class UiExamFragment : Fragment() {
         val decorView = requireActivity().window?.decorView
         val rootView = decorView?.findViewById<ViewGroup>(android.R.id.content)!!
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            val navBottom = requireActivity().window.decorView.rootWindowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+//            logger { "navBottom: $navBottom" } // 135
+//        }
         return ComposeView(requireContext()).apply {
             setContent {
+                val systemBar = WindowInsets.systemBars.getBottom(LocalDensity.current).dp
+                logger { "systemBar: $systemBar" }
+
 //                UiExamContent()
-                BlurContents(
-                    parent = rootView
-                )
+//                BlurContents(
+//                    parent = rootView
+//                )
+
+                val window = requireActivity().window
+                val view = requireView().rootView
+                val navBarBottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
+                var navBar by remember { mutableStateOf(navBarBottom) }
+
+                ModalBottomSheetExam()
+//                ModalBottomSheetExam1()
+//                ModalBottomSheetSample()
             }
         }
     }
