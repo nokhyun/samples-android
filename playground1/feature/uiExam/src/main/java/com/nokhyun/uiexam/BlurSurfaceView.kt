@@ -3,6 +3,7 @@ package com.nokhyun.uiexam
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.RenderEffect
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
@@ -85,6 +86,10 @@ class BlurSurfaceView @JvmOverloads constructor(
 
         inAllocation.destroy()
     }
+
+//    private fun blurWithRenderEffect(){
+//        this.rootView.setRenderEffect()
+//    }
 
     fun setParent(parent: ViewGroup){
         this.parent = parent

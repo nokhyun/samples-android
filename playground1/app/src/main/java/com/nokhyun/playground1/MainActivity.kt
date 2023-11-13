@@ -1,18 +1,40 @@
 package com.nokhyun.playground1
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+
+val Int.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val screenSizeController: ScreenSizeController by lazy { ScreenSizeControllerImpl() }
     private lateinit var navController: NavController
+
+    private val statusBarHeight: Int
+        @SuppressLint("DiscouragedApi", "InternalInsetResource")
+        get() {
+            var result = 0
+            val resourceId: Int = resources.getIdentifier("status_bar_height", "dimen", "android")
+            if (resourceId > 0) {
+                result = resources.getDimension(resourceId).toInt()
+            }
+            return result
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         screenSizeController.topLevelScreenSizeInit(resources.getBoolean(R.bool.isTablet), binding, navController) {
             // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        binding.root.setPadding(0, statusBarHeight, 0, 0)
 
         logger { "before check" }
 //        check(false) {
