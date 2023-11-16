@@ -1,6 +1,5 @@
 package com.nokhyun.uiexam
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 
 class UiExamFragment : Fragment() {
@@ -25,10 +23,6 @@ class UiExamFragment : Fragment() {
         val decorView = requireActivity().window?.decorView
         val rootView = decorView?.findViewById<ViewGroup>(android.R.id.content)!!
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            val navBottom = requireActivity().window.decorView.rootWindowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-//            logger { "navBottom: $navBottom" } // 135
-//        }
         return ComposeView(requireContext()).apply {
             setContent {
                 val systemBar = WindowInsets.systemBars.getBottom(LocalDensity.current).dp
