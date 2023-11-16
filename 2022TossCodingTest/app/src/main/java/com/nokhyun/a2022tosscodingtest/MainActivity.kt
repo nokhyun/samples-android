@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,13 +43,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        solution.solution(assets2)
 
         setContent {
+            val result = solution.solution(assets2)
             _2022TossCodingTestTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                    LazyColumn {
+                        items(result.size) { index ->
+                            AssetText(asset = result[index])
+                        }
+                    }
                 }
             }
         }
@@ -100,37 +105,61 @@ class Solution {
         return assets.mapNotNull { asset ->
             runCatching { // runCatching 활용은 답안 체크함...
                 /** extentions 활용하여 개선 가능. */
-                when {
-                    /**
-                     *  Exception
-                     *  object Validation: Throwable() 사용하여 개선 가능.
-                     *  */
-                    asset.length != 9 -> throw Exception("length: ${asset.length}")
-                    asset.slice(0..1).toInt() !in 13..22 -> throw Exception("year: ${asset.slice(0..1)}")
-                    /** asset.get(2) 로 개선 가능. */
-                    asset.slice(2..2) != "-" -> throw Exception("asset slice 2 is not hyphen")
-                    !Code.values().any { it.name == asset.slice(3..4) } -> throw Exception("asset code: ${asset.slice(3..4)}")
-                    asset.slice(5..6).toInt() !in 1..12 -> throw Exception("mm: ${asset.slice(5..6)}")
-                    asset.slice(7 until asset.length).toInt() > 99 -> throw Exception("num: ${asset.slice(7..asset.length)}")
-                    else -> Asset(
-                        value = asset,
-                        yy = asset.slice(0..1).toInt(),
-                        code = Code.valueOf(asset.slice(3..4)),
-                        mm = asset.slice(5..6).toInt(),
-                        num = asset.slice(7..8).toInt()
-                    )
-                }
+                // AS-IS
+//                when {
+//                    /**
+//                     *  Exception
+//                     *  object Validation: Throwable() 사용하여 개선 가능.
+//                     *  */
+//                    asset.length != 9 -> throw Exception("length: ${asset.length}")
+//                    asset.slice(0..1).toInt() !in 13..22 -> throw Exception("year: ${asset.slice(0..1)}")
+//                    /** asset.get(2) 로 개선 가능. */
+//                    asset.slice(2..2) != "-" -> throw Exception("asset slice 2 is not hyphen")
+//                    !Code.values().any { it.name == asset.slice(3..4) } -> throw Exception("asset code: ${asset.slice(3..4)}")
+//                    asset.slice(5..6).toInt() !in 1..12 -> throw Exception("mm: ${asset.slice(5..6)}")
+//                    asset.slice(7 until asset.length).toInt() > 99 -> throw Exception("num: ${asset.slice(7..asset.length)}")
+//                    else -> Asset(
+//                        value = asset,
+//                        yy = asset.slice(0..1).toInt(),
+//                        code = Code.valueOf(asset.slice(3..4)),
+//                        mm = asset.slice(5..6).toInt(),
+//                        num = asset.slice(7..8).toInt()
+//                    )
+//                }
+                asset.toAssetClass()
             }.getOrNull()
         }.filter { it.isValidation }
             .sorted()
             .distinct()
             .map { it.value }
             .toTypedArray()
-            .let {
-                logger { "result: $it" }
-                it
-            }
     }
+
+    private object ValidationError : Throwable()
+
+    private fun String.toAssetClass(): Asset = when {
+        // TO-BE
+        length != 9 -> throw ValidationError
+        slice(0..1).toInt() !in 13..22 -> throw ValidationError
+        get(2) != '-' -> throw Exception("asset slice 2 is not hyphen")
+        !Code.values().any { it.name == slice(3..4) } -> throw ValidationError
+        slice(5..6).toInt() !in 1..12 -> throw ValidationError
+        slice(7 until length).toInt() > 99 -> throw ValidationError
+        else -> Asset(
+            value = this,
+            yy = slice(0..1).toInt(),
+            code = Code.valueOf(slice(3..4)),
+            mm = slice(5..6).toInt(),
+            num = slice(7..8).toInt()
+        )
+    }
+}
+
+@Composable
+fun AssetText(
+    asset: String,
+) {
+    Text(text = asset)
 }
 
 @Composable
