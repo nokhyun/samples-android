@@ -41,6 +41,8 @@ class UiExamFragment : Fragment() {
                 ModalBottomSheetExam()
 //                ModalBottomSheetExam1()
 //                ModalBottomSheetSample()
+
+                CanvasExam()
             }
         }
     }
