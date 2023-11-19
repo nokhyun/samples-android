@@ -1,5 +1,6 @@
 package com.nokhyun.playground1
 
+import io.mockk.mockk
 import org.junit.Test
 
 import org.junit.Assert.*
