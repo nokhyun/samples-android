@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
 
 class UiExamFragment : Fragment() {
 
@@ -42,7 +43,10 @@ class UiExamFragment : Fragment() {
 //                ModalBottomSheetExam1()
 //                ModalBottomSheetSample()
 
-                CanvasExam()
+//                CanvasExam()
+                FavoriteFoodInput(onFavoriteFoodInputChanged = {
+                    logger { "onFavoriteFoodInputChanged: $it" }
+                })
             }
         }
     }
