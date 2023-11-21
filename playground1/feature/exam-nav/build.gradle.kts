@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -6,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.nokhyun.uiexam"
+    namespace = "com.nokhyun.exam_nav"
     compileSdk = 33
 
     defaultConfig {
@@ -40,16 +41,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:exam-nav"))
-
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
 
     implementation(libs.hilt)
     kapt(libs.hilt.kapt)
