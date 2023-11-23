@@ -1,8 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -51,8 +50,6 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
 
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
     implementation(libs.paging3.compose)
     implementation(libs.compose.coil)
     implementation(libs.compose.ui)

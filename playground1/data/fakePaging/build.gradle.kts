@@ -2,8 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version "1.8.22"
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -33,10 +32,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(":core:network-paging"))
     implementation(project(":domain:passenger"))
@@ -46,8 +41,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(libs.kotlinx.serialization)
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
     implementation(libs.paging3)
     implementation(libs.retrofit.core)
 }

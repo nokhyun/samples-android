@@ -4,8 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -41,10 +40,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(":core:network"))
     implementation("androidx.core:core-ktx:1.8.0")
@@ -65,9 +60,6 @@ dependencies {
     val nav_version = "2.6.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
 
     implementation("com.github.nokhyun:NokhyunPermission:1.0.0")
 }

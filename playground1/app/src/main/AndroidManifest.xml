@@ -27,7 +27,16 @@
         </activity>
 
         <activity android:name="com.nokhyun.first.CardPaymentActivity" />
-        <activity android:name="com.nokhyun.exam_nav.ExamNavActivity" />
+        <activity
+            android:name="com.nokhyun.exam_nav.ExamNavActivity"
+            android:exported="false"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <data
+                    android:host="www.example.com"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"

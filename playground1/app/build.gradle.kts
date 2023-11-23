@@ -4,8 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -46,9 +45,9 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
+//kapt {
+//    correctErrorTypes = true
+//}
 
 dependencies {
     runtimeOnly(project(":core:network-impl"))
@@ -68,8 +67,6 @@ dependencies {
     val nav_version = "2.6.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
 
     val mockkVersion = "1.13.8"
     testImplementation("io.mockk:mockk:${mockkVersion}")

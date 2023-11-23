@@ -2,8 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version "1.8.22"
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -25,13 +24,7 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.serializationConverter)
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
 }

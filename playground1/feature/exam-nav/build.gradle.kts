@@ -2,8 +2,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -48,8 +47,6 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
     implementation(libs.paging3.compose)
     implementation(libs.compose.coil)
     implementation(libs.compose.ui)

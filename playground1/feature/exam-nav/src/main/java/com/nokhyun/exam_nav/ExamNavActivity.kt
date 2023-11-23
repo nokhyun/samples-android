@@ -1,19 +1,12 @@
 package com.nokhyun.exam_nav
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.rememberNavController
 
-class ExamNavActivity: ComponentActivity() {
+class ExamNavActivity : SetContentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            MaterialTheme {
-                // TODO
-            }
-        }
+    override fun initContent(): @Composable () -> Unit = {
+        val navHostController = rememberNavController()
+        ExamNavHost(navHostController = navHostController)
     }
 }

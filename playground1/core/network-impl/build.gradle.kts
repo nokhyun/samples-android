@@ -1,8 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -31,10 +30,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:network-paging"))
@@ -44,6 +39,4 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.serializationConverter)
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
 }
