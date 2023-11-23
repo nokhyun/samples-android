@@ -1,8 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("nokhyun.android.hilt")
 }
 
 android {
@@ -45,10 +44,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(":domain:passenger"))
     implementation(project(":data:fakePaging"))
@@ -64,8 +59,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(libs.paging3)
-    implementation(libs.hilt)
-    kapt(libs.hilt.kapt)
     implementation(libs.paging3.compose)
     implementation(libs.compose.coil)
     implementation(libs.compose.ui)
