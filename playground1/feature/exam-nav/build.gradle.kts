@@ -56,4 +56,5 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.compose.vico)
     implementation(libs.compose.material3)
+    implementation("androidx.navigation:navigation-testing:2.7.5")
 }
