@@ -1,20 +1,26 @@
 package com.nokhyun.playground1
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Resources
-import android.graphics.Point
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.launch
+import java.io.IOException
 
 val Int.dp: Int
     get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
@@ -38,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        some()
         val binding = ActivityMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         setContentView(binding.root)
@@ -73,6 +80,40 @@ class MainActivity : AppCompatActivity() {
 //            }
 //            logger { "headerViewGroup: $headerViewGroup" }
 //        }
+
+    }
+
+    private fun some() {
+        val f = flowOf(1, 2, 3, 4, 5)
+            .onEach {
+                logger { "onEach: $it" }
+                if(it == 4) throw IOException("Test")
+            }
+//            .retry(3){
+//                logger { "retry !!" }
+//                (it is IOException).also { if(it) delay(1000L) }
+//            }
+            .retryWhen {cause: Throwable, attempt: Long ->
+                logger { "attempt: $attempt" }
+                if(cause is IOException && attempt < 2){
+                    delay(1000L)
+                    true
+                }else{
+                    emit(100)
+                    false
+                }
+            }
+            .catch {
+                logger { "catch!!" }
+                if (it !is IOException) throw it
+            }
+//            .launchIn(lifecycleScope)
+
+        lifecycleScope.launch {
+            f.collect{
+                logger { "collect: $it" }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
