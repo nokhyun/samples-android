@@ -82,6 +82,8 @@ fun ExamUI(
             FavoriteFoodInput(onFavoriteFoodInputChanged = {
                 logger { "onFavoriteFoodInputChanged: $it" }
             })
+
+            GraphicExam()
         }
     }
 }
