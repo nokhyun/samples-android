@@ -1,12 +1,18 @@
 package com.nokhyun.uiexam
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -28,12 +34,24 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.ImageShader
+import androidx.compose.ui.graphics.LinearGradientShader
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,6 +93,16 @@ fun GraphicExam() {
         DrawWithCache()
         GraphicsLayerExam()
         DrawWithContentExam()
+        Row {
+            BrushExam()
+            Spacer(modifier = Modifier.padding(start = 4.dp, end = 4.dp))
+            TileModeExam()
+            Spacer(modifier = Modifier.padding(start = 4.dp, end = 4.dp))
+            DrawInsetExam()
+        }
+        ImageBrushExam()
+        ImageBrushExam(ImageBrushType.TEXT)
+        ImageBrushExam(ImageBrushType.CANVAS)
     }
 }
 
@@ -184,6 +212,135 @@ fun DrawWithContentExam() {
         )
     }
 }
+
+@Composable
+fun BrushExam() {
+    val colorStops: Array<Pair<Float, Color>> = arrayOf(
+        0.0f to Color.Yellow,
+        0.2f to Color.Red,
+        1f to Color.Blue
+    )
+
+    Box(
+        modifier = Modifier
+            .requiredSize(100.dp)
+            .background(Brush.horizontalGradient(colorStops = colorStops))
+    )
+}
+
+@Composable
+fun TileModeExam() {
+    val listColors = listOf(Color.Yellow, Color.Red, Color.Blue)
+    LocalDensity.current.density
+    val tileSize: Float = with(LocalDensity.current) {
+        25.dp.toPx()
+    }
+
+    val customBrush = remember {
+        object : ShaderBrush() {
+            override fun createShader(size: Size): Shader {
+                return LinearGradientShader(
+                    colors = listColors,
+                    from = Offset.Zero,
+                    to = Offset(size.width / 4f, 0f),
+                    tileMode = TileMode.Mirror
+                )
+            }
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .requiredSize(100.dp)
+            .background(
+//                Brush.horizontalGradient(
+//                    colors = listColors,
+//                    endX = tileSize,
+//                    tileMode = TileMode.Repeated
+//                )
+
+                customBrush
+            )
+    )
+}
+
+@Composable
+fun DrawInsetExam() {
+    val colorStops = arrayOf(
+        0.0f to Color.Yellow,
+        0.2f to Color.Red,
+        1f to Color.Blue
+    )
+
+    val colorStops1 = arrayOf(
+        0.0f to Color.Gray,
+        0.2f to Color.Green,
+        1f to Color.Red
+    )
+
+    val colorStops2 = arrayOf(
+        0.0f to Color.Yellow,
+        0.2f to Color.LightGray,
+        1f to Color.Cyan
+    )
+
+    val brush = Brush.horizontalGradient(colorStops = colorStops)
+    val brush1 = Brush.horizontalGradient(colorStops = colorStops1)
+    val brush2 = Brush.horizontalGradient(colorStops = colorStops2)
+    Box(
+        modifier = Modifier
+            .requiredSize(100.dp)
+            .drawBehind {
+                drawRect(brush = brush)
+                inset(10f) {
+                    drawRect(brush = brush1)
+                    inset(20f) {
+                        drawRect(brush = brush2)
+                    }
+                }
+            }
+    )
+}
+
+enum class ImageBrushType {
+    BOX, TEXT, CANVAS
+}
+
+@Composable
+fun ImageBrushExam(
+    type: ImageBrushType = ImageBrushType.BOX
+) {
+    val imageBrush = ShaderBrush(ImageShader(ImageBitmap.imageResource(id = R.drawable.dog)))
+
+    when (type) {
+        ImageBrushType.BOX -> {
+            Box(
+                modifier = Modifier
+                    .requiredSize(200.dp)
+                    .background(imageBrush)
+            )
+        }
+
+        ImageBrushType.TEXT -> {
+            Text(
+                text = "Hello Android!",
+                style = TextStyle(
+                    brush = imageBrush,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 30.sp
+                )
+            )
+        }
+
+        ImageBrushType.CANVAS -> {
+            Canvas(
+                modifier = Modifier.size(200.dp),
+                onDraw = { drawCircle(imageBrush) }
+            )
+        }
+    }
+}
+
 
 @Preview
 @Composable
