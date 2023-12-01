@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -70,10 +72,15 @@ class UiExamFragment : Fragment() {
 fun ExamUI(
     modifier: Modifier
 ) {
+    val scrollState = rememberScrollState()
+
     Box(
         modifier = modifier
+            .fillMaxSize()
     ) {
-        Column {
+        Column(
+            modifier = Modifier.verticalScroll(scrollState)
+        ) {
             ModalBottomSheetExam()
 //                ModalBottomSheetExam1()
 //                ModalBottomSheetSample()
@@ -84,6 +91,7 @@ fun ExamUI(
             })
 
             GraphicExam()
+            AnimatedExam()
         }
     }
 }
