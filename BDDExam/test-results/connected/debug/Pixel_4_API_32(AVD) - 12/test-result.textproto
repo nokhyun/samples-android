@@ -1,0 +1,73 @@
+# 2023-12-07T13:09:53.668Z:
+test_suite_meta_data {
+  scheduled_test_case_count: 1
+}
+test_status: FAILED
+test_result {
+  test_case {
+    test_class: "MainActivityTest"
+    test_package: "com.nokhyun.bddexam"
+    test_method: "initializationError"
+    start_time {
+      seconds: 1701954592
+      nanos: 333000000
+    }
+    end_time {
+      seconds: 1701954592
+      nanos: 347000000
+    }
+  }
+  test_status: FAILED
+  error {
+    error_message: "java.lang.RuntimeException: Failed to instantiate test runner class androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner\n\n\nat androidx.test.ext.junit.runners.AndroidJUnit4.throwInitializationError(AndroidJUnit4.java:129)\nat androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:121)\nat androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:82)\nat androidx.test.ext.junit.runners.AndroidJUnit4.<init>(AndroidJUnit4.java:56)\n... 14 trimmed\nCaused by: java.lang.reflect.InvocationTargetException\nat java.lang.reflect.Constructor.newInstance0(Native Method)\nat java.lang.reflect.Constructor.newInstance(Constructor.java:343)\nat androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:112)\n... 17 more\nCaused by: org.junit.runners.model.InvalidTestClassError: Invalid test class \'com.nokhyun.bddexam.MainActivityTest\':\n1. No runnable methods\nat org.junit.runners.ParentRunner.validate(ParentRunner.java:525)\nat org.junit.runners.ParentRunner.<init>(ParentRunner.java:92)\nat org.junit.runners.BlockJUnit4ClassRunner.<init>(BlockJUnit4ClassRunner.java:74)\nat androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner.<init>(AndroidJUnit4ClassRunner.java:43)\nat androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner.<init>(AndroidJUnit4ClassRunner.java:48)\n... 20 more"
+    error_type: "java.lang.reflect.InvocationTargetException\nat java.lang.reflect.Constructor.newInstance0(Native Method)\nat java.lang.reflect.Constructor.newInstance(Constructor.java"
+    stack_trace: "java.lang.RuntimeException: Failed to instantiate test runner class androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner\n\n\nat androidx.test.ext.junit.runners.AndroidJUnit4.throwInitializationError(AndroidJUnit4.java:129)\nat androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:121)\nat androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:82)\nat androidx.test.ext.junit.runners.AndroidJUnit4.<init>(AndroidJUnit4.java:56)\n... 14 trimmed\nCaused by: java.lang.reflect.InvocationTargetException\nat java.lang.reflect.Constructor.newInstance0(Native Method)\nat java.lang.reflect.Constructor.newInstance(Constructor.java:343)\nat androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:112)\n... 17 more\nCaused by: org.junit.runners.model.InvalidTestClassError: Invalid test class \'com.nokhyun.bddexam.MainActivityTest\':\n1. No runnable methods\nat org.junit.runners.ParentRunner.validate(ParentRunner.java:525)\nat org.junit.runners.ParentRunner.<init>(ParentRunner.java:92)\nat org.junit.runners.BlockJUnit4ClassRunner.<init>(BlockJUnit4ClassRunner.java:74)\nat androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner.<init>(AndroidJUnit4ClassRunner.java:43)\nat androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner.<init>(AndroidJUnit4ClassRunner.java:48)\n... 20 more"
+  }
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/Users/nokhyun90/Desktop/aos/samples-android/BDDExam/test-results/connected/debug/Pixel_4_API_32(AVD) - 12/logcat-com.nokhyun.bddexam.MainActivityTest-initializationError.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/Users/nokhyun90/Desktop/aos/samples-android/BDDExam/test-results/connected/debug/Pixel_4_API_32(AVD) - 12/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/Users/nokhyun90/Desktop/aos/samples-android/BDDExam/test-results/connected/debug/Pixel_4_API_32(AVD) - 12/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/Users/nokhyun90/Desktop/aos/samples-android/BDDExam/test-results/connected/debug/Pixel_4_API_32(AVD) - 12/cpuinfo"
+    }
+  }
+}
+output_artifact {
+  label {
+    label: "test-results.log"
+    namespace: "com.google.testing.platform.runtime.android.driver.AndroidInstrumentationDriver"
+  }
+  source_path {
+    path: "/Users/nokhyun90/Desktop/aos/samples-android/BDDExam/test-results/connected/debug/Pixel_4_API_32(AVD) - 12/testlog/test-results.log"
+  }
+  type: TEST_DATA
+  mime_type: "text/plain"
+}

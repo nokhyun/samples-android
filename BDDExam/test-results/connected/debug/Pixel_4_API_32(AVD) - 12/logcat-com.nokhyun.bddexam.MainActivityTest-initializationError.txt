@@ -1,0 +1,40 @@
+12-07 22:09:49.228 12472 12491 I TestRunner: started: initializationError(com.nokhyun.bddexam.MainActivityTest)
+12-07 22:09:49.230 12472 12491 E TestRunner: failed: initializationError(com.nokhyun.bddexam.MainActivityTest)
+12-07 22:09:49.230 12472 12491 E TestRunner: ----- begin exception -----
+12-07 22:09:49.232 12472 12491 E TestRunner: java.lang.RuntimeException: Failed to instantiate test runner class androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+12-07 22:09:49.232 12472 12491 E TestRunner:
+12-07 22:09:49.232 12472 12491 E TestRunner:
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.throwInitializationError(AndroidJUnit4.java:129)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:121)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:82)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.<init>(AndroidJUnit4.java:56)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at java.lang.reflect.Constructor.newInstance0(Native Method)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:343)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.internal.builders.AnnotatedBuilder.buildRunner(AnnotatedBuilder.java:104)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.internal.builders.AnnotatedBuilder.runnerForClass(AnnotatedBuilder.java:86)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.junit4.AndroidAnnotatedBuilder.runnerForClass(AndroidAnnotatedBuilder.java:63)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:37)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.AndroidRunnerBuilder.runnerForClass(AndroidRunnerBuilder.java:149)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:45)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:835)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:650)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:418)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+12-07 22:09:49.232 12472 12491 E TestRunner: Caused by: java.lang.reflect.InvocationTargetException
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at java.lang.reflect.Constructor.newInstance0(Native Method)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:343)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.ext.junit.runners.AndroidJUnit4.loadRunner(AndroidJUnit4.java:112)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	... 17 more
+12-07 22:09:49.232 12472 12491 E TestRunner: Caused by: org.junit.runners.model.InvalidTestClassError: Invalid test class 'com.nokhyun.bddexam.MainActivityTest':
+12-07 22:09:49.232 12472 12491 E TestRunner:   1. No runnable methods
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.runners.ParentRunner.validate(ParentRunner.java:525)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.runners.ParentRunner.<init>(ParentRunner.java:92)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.<init>(BlockJUnit4ClassRunner.java:74)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner.<init>(AndroidJUnit4ClassRunner.java:43)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	at androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner.<init>(AndroidJUnit4ClassRunner.java:48)
+12-07 22:09:49.232 12472 12491 E TestRunner: 	... 20 more
+12-07 22:09:49.232 12472 12491 E TestRunner: ----- end exception -----
+12-07 22:09:49.233 12472 12491 I TestRunner: finished: initializationError(com.nokhyun.bddexam.MainActivityTest)
