@@ -31,9 +31,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:network"))
-    implementation(project(":core:network-paging"))
-
+    implementation(project(":core:network-api"))
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.serializationAdapater)
     implementation(libs.okhttp.logging)

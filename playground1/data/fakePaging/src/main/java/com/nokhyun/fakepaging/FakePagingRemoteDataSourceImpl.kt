@@ -1,21 +1,21 @@
 package com.nokhyun.fakepaging
 
 import android.util.Log
-import com.nokhyun.network_paging.FakePagingService
-import com.nokhyun.network_paging.annotations.FakePaging
-import com.nokhyun.network_paging.PassengerResponse
+import com.nokhyun.network.FakePagingService
+import com.nokhyun.network.annotations.FakePaging
+import com.nokhyun.network.responseModel.PassengerResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 internal interface FakePagingRemoteDataSource {
-    fun fetchPassenger(passengerData: PassengerData): Flow<com.nokhyun.network_paging.PassengerResponse>
+    fun fetchPassenger(passengerData: PassengerData): Flow<PassengerResponse>
 }
 
 internal class FakePagingRemoteDataSourceImpl @Inject constructor(
-    @com.nokhyun.network_paging.annotations.FakePaging private val fakePagingService: com.nokhyun.network_paging.FakePagingService
+    @FakePaging private val fakePagingService: FakePagingService,
 ) : FakePagingRemoteDataSource {
-    override fun fetchPassenger(passengerData: PassengerData): Flow<com.nokhyun.network_paging.PassengerResponse> = flow {
+    override fun fetchPassenger(passengerData: PassengerData): Flow<PassengerResponse> = flow {
         Log.e("fetchPassenger", "fetchPassenger")
         emit(
             fakePagingService.fetchPassenger(

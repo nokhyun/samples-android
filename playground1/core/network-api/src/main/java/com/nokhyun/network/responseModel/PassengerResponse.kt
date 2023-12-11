@@ -1,4 +1,4 @@
-package com.nokhyun.network_paging
+package com.nokhyun.network.responseModel
 
 import kotlinx.serialization.Serializable
 

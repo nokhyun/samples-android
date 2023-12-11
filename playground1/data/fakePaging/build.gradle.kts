@@ -33,7 +33,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:network-paging"))
+    implementation(project(":core:network-api"))
+    runtimeOnly(project(":core:network-impl"))
     implementation(project(":domain:passenger"))
 
     testImplementation("junit:junit:4.13.2")
