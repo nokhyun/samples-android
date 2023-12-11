@@ -1,4 +1,4 @@
-package com.nokhyun.network_paging.annotations
+package com.nokhyun.network.annotations
 
 import javax.inject.Qualifier
 

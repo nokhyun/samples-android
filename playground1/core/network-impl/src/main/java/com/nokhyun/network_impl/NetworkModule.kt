@@ -1,9 +1,9 @@
 package com.nokhyun.network_impl
 
-import com.nokhyun.network_paging.FakePagingService
+import com.nokhyun.network.FakePagingService
 import com.nokhyun.network.FakeService
-import com.nokhyun.network_paging.annotations.FakePaging
-import com.nokhyun.network_impl.annotations.OtherInterceptor
+import com.nokhyun.network.annotations.FakePaging
+import com.nokhyun.network.annotations.OtherInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +38,7 @@ internal object NetworkModule {
     @Provides
     @Singleton
     fun provideOtherInterceptorOkHttpClient(
-        @OtherInterceptor otherInterceptor: com.nokhyun.network_impl.interceptors.OtherInterceptor
+        @OtherInterceptor otherInterceptor: com.nokhyun.network_impl.interceptors.OtherInterceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)

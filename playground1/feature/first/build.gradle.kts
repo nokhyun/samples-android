@@ -41,7 +41,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:network"))
+    implementation(project(":core:network-api"))
+    runtimeOnly(project(":core:network-impl"))
+
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
