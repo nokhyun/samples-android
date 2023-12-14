@@ -13,10 +13,7 @@ import com.nokhyun.playground1.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.launch
@@ -51,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            logger { "controller: $controller :: destination: $destination :: arguments: $arguments" }
+        }
 
         screenSizeController.topLevelScreenSizeInit(resources.getBoolean(R.bool.isTablet), binding, navController) {
             // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
@@ -87,18 +88,18 @@ class MainActivity : AppCompatActivity() {
         val f = flowOf(1, 2, 3, 4, 5)
             .onEach {
                 logger { "onEach: $it" }
-                if(it == 4) throw IOException("Test")
+                if (it == 4) throw IOException("Test")
             }
 //            .retry(3){
 //                logger { "retry !!" }
 //                (it is IOException).also { if(it) delay(1000L) }
 //            }
-            .retryWhen {cause: Throwable, attempt: Long ->
+            .retryWhen { cause: Throwable, attempt: Long ->
                 logger { "attempt: $attempt" }
-                if(cause is IOException && attempt < 2){
+                if (cause is IOException && attempt < 2) {
                     delay(1000L)
                     true
-                }else{
+                } else {
                     emit(100)
                     false
                 }
@@ -110,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 //            .launchIn(lifecycleScope)
 
         lifecycleScope.launch {
-            f.collect{
+            f.collect {
                 logger { "collect: $it" }
             }
         }
