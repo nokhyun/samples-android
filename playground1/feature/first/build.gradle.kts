@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(project(":core:network-api"))
+    compileOnly(project(":feature:startup-api"))
     runtimeOnly(project(":core:network-impl"))
 
     implementation("androidx.core:core-ktx:1.8.0")

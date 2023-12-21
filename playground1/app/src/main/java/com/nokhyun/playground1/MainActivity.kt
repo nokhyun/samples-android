@@ -9,6 +9,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.nokhyun.first.FirstInitializer
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -41,6 +42,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (application as PlaygroundApplication).initializerSet
+            .onEach {
+            logger { "initializer: $it" }
+        }.filterIsInstance<FirstInitializer>()
+            .let {
+                it[0]()
+            }
         some()
         val binding = ActivityMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
