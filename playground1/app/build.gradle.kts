@@ -55,7 +55,7 @@ dependencies {
     implementation(project(":feature:third"))
     implementation(project(":feature:uiExam"))
     implementation(project(":feature:exam-nav"))
-    compileOnly(project(":feature:startup-api"))
+    implementation(project(":feature:startup-api"))
 
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
