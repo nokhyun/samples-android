@@ -74,6 +74,7 @@ fun ModalBottomSheetExam() {
                     }
                 }
             },
+            dragHandle = null
         )
     }
 

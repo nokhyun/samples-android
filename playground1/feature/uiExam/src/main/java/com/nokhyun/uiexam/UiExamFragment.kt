@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
+import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
-import okhttp3.internal.immutableListOf
 
 class UiExamFragment : Fragment() {
 
@@ -72,7 +72,7 @@ class UiExamFragment : Fragment() {
 
 @Composable
 fun ExamUI(
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val scrollState = rememberScrollState()
 
@@ -95,6 +95,7 @@ fun ExamUI(
             GraphicExam()
             AnimatedExam()
             StableTestScreen()
+            StableComposable()
         }
     }
 }
