@@ -32,6 +32,7 @@ import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
+import com.nokhyun.uiexam.text.MyTextScreen
 
 class UiExamFragment : Fragment() {
 
@@ -99,6 +100,7 @@ fun ExamUI(
             StableTestScreen()
             StableComposable()
             SimpleClickableText()
+            MyTextScreen()
         }
     }
 }
