@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
@@ -31,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
+import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
 import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
@@ -105,6 +105,7 @@ fun ExamUI(
             SimpleClickableText()
             MyTextScreen()
             SnapshotFlowScreen()
+            ProduceStateScreen()
         }
     }
 }
