@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
 import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
+import com.nokhyun.uiexam.sideEffectExam.SideEffectScreen
 import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
@@ -106,6 +107,8 @@ fun ExamUI(
             MyTextScreen()
             SnapshotFlowScreen()
             ProduceStateScreen()
+
+            SideEffectScreen()
         }
     }
 }
