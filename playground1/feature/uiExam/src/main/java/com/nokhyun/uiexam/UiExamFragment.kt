@@ -29,6 +29,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
+import com.nokhyun.uiexam.disposableEffectExam.DisposableEffectScreen
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
 import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
 import com.nokhyun.uiexam.sideEffectExam.SideEffectScreen
@@ -109,6 +110,14 @@ fun ExamUI(
             ProduceStateScreen()
 
             SideEffectScreen()
+            DisposableEffectScreen(
+                onStart = {
+                    logger { "ON_START" }
+                },
+                onStop = {
+                    logger { "ON_STOP" }
+                }
+            )
         }
     }
 }
