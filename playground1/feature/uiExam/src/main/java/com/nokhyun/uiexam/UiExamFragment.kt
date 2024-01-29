@@ -17,6 +17,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +33,7 @@ import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.disposableEffectExam.DisposableEffectScreen
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
 import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
+import com.nokhyun.uiexam.rememberUpdatedStateExam.RememberUpdatedStateScreen
 import com.nokhyun.uiexam.sideEffectExam.SideEffectScreen
 import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
@@ -118,6 +120,8 @@ fun ExamUI(
                     logger { "ON_STOP" }
                 }
             )
+
+            RememberUpdatedStateScreen()
         }
     }
 }
