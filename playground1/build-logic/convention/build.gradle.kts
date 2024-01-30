@@ -18,5 +18,10 @@ gradlePlugin {
             id = "nokhyun.android.hilt"
             implementationClass = "AndroidHiltPlugin"
         }
+
+        register("composePlugin"){
+            id = "nokhyun.compose"
+            implementationClass = "ComposePlugin"
+        }
     }
 }
