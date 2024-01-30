@@ -17,7 +17,6 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
+import com.nokhyun.uiexam.RememberCoroutineScope.RememberCoroutineScopeScreen
 import com.nokhyun.uiexam.disposableEffectExam.DisposableEffectScreen
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
 import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
@@ -122,6 +122,7 @@ fun ExamUI(
             )
 
             RememberUpdatedStateScreen()
+            RememberCoroutineScopeScreen()
         }
     }
 }
