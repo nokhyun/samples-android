@@ -21,15 +21,8 @@ class CalendarFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                TestScreen()
+                CalendarScreen()
             }
         }
-    }
-}
-
-@Composable
-fun TestScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text("Hi")
     }
 }
