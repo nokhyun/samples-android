@@ -1,14 +1,17 @@
 package com.nokhyun.calendar
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -24,12 +27,15 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -39,37 +45,64 @@ import androidx.compose.ui.unit.sp
 import com.kizitonwose.calendar.compose.CalendarLayoutInfo
 import com.kizitonwose.calendar.compose.CalendarState
 import com.kizitonwose.calendar.compose.HorizontalCalendar
+import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
-import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
+import com.kizitonwose.calendar.core.atStartOfMonth
+import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.YearMonth
+
+val localDateSaver = listSaver<LocalDate, Any>(
+    save = { listOf(it) },
+    restore = {
+        it[0] as LocalDate
+    }
+)
 
 @Composable
 fun CalendarScreen() {
+    val currentDate = remember { LocalDate.now() }
     val currentMonth = remember { YearMonth.now() }
-    val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
-    val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
-    val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
+    val startMonth = remember { currentMonth.minusMonths(500) } // Adjust as needed
+    val endMonth = remember { currentMonth.plusMonths(500) } // Adjust as needed
+    val daysOfWeek = remember { daysOfWeek() }
     val coroutineScope = rememberCoroutineScope()
-    var selections = remember { mutableStateListOf<CalendarDay>() }
+    val selections = remember { mutableStateListOf<LocalDate>() }
+
+    var isWeekState by rememberSaveable { mutableStateOf(false) }
+
+    val weekState = rememberWeekCalendarState(
+        startDate = startMonth.atStartOfMonth(),
+        endDate = endMonth.atEndOfMonth(),
+        firstVisibleWeekDate = currentDate,
+        firstDayOfWeek = daysOfWeek.first(),
+    )
 
     val state = rememberCalendarState(
         startMonth = startMonth,
         endMonth = endMonth,
         firstVisibleMonth = currentMonth,
-        firstDayOfWeek = firstDayOfWeek
+        firstDayOfWeek = daysOfWeek.first()
     )
 
     val visibleMonth = rememberFirstMostVisibleMonth(state = state)
     Column(
         modifier = Modifier
+            .fillMaxSize()
             .background(Color.White)
+            .pointerInput(Unit) {
+                detectDragGestures { _, dragAmount ->
+                    isWeekState = dragAmount.y < -5
+                }
+            }
     ) {
         CalendarTitle(
             onPrevious = {
@@ -88,27 +121,69 @@ fun CalendarScreen() {
 
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
-        HorizontalCalendar(
-            modifier = Modifier.testTag("Calendar"),
-            state = state,
-            dayContent = { day ->
-                Day(
-                    day = day,
-                    isSelected = selections.contains(day)
-                ) {
-                    if (selections.contains(it)) {
-                        selections.remove(it)
+        AnimatedVisibility(visible = !isWeekState) {
+            HorizontalCalendar(
+                modifier = Modifier
+                    .testTag("Calendar"),
+                state = state,
+                dayContent = { day ->
+                    if (LocalDate.now().isEqual(day.date)) {
+                        Today(
+                            day = day.date,
+                            isSelected = selections.contains(day.date)
+                        ) {
+                            if (selections.contains(it)) {
+                                selections.remove(it)
+                            } else {
+                                selections.clear()
+                                selections.add(it)
+                            }
+                        }
                     } else {
-                        selections.clear()
-                        selections.add(day)
+                        Day(
+                            day = day.date,
+                            isSelected = selections.contains(day.date)
+                        ) {
+                            if (selections.contains(it)) {
+                                selections.remove(it)
+                            } else {
+                                selections.clear()
+                                selections.add(it)
+                            }
+                        }
                     }
+                },
+                monthHeader = { month ->
+                    val daysOfWeek = month.weekDays.first().map { it.date.dayOfWeek }
+                    MonthHeader(daysOfWeek = daysOfWeek)
                 }
-            },
-            monthHeader = { month ->
-                val daysOfWeek = month.weekDays.first().map { it.date.dayOfWeek }
-                MonthHeader(daysOfWeek = daysOfWeek)
-            }
-        )
+            )
+        }
+
+        // Week Calendar
+        AnimatedVisibility(visible = isWeekState) {
+            WeekCalendar(
+                modifier = Modifier,
+                state = weekState,
+                dayContent = { day ->
+                    Day(
+                        day = day.date,
+                        isSelected = selections.contains(day.date)
+                    ) {
+                        if (selections.contains(it)) {
+                            selections.remove(it)
+                        } else {
+                            selections.clear()
+                            selections.add(it)
+                        }
+                    }
+                },
+                weekHeader = {
+                    val daysOfWeek = it.days.map { it.date.dayOfWeek }
+                    MonthHeader(daysOfWeek = daysOfWeek)
+                }
+            )
+        }
     }
 }
 
@@ -193,6 +268,52 @@ fun Day(
         Text(
             text = day.date.dayOfMonth.toString(),
             color = if (isSelected) Color.White else Color.Black
+        )
+    }
+}
+
+@Composable
+fun Day(
+    day: LocalDate,
+    isSelected: Boolean,
+    onClick: (LocalDate) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .background(if (isSelected) Color.Cyan else Color.Transparent)
+            .clickable {
+                onClick(day)
+            }, // This is important for square sizing!
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = day.dayOfMonth.toString(),
+            color = if (isSelected) Color.White else Color.Black
+        )
+    }
+}
+
+@Composable
+fun Today(
+    day: LocalDate,
+    isSelected: Boolean,
+    onClick: (LocalDate) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .background(if (isSelected) Color.Cyan else Color.LightGray)
+            .clickable {
+                onClick(day)
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = day.dayOfMonth.toString(),
+            color = Color.White
         )
     }
 }
