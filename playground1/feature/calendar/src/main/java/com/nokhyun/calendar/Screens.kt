@@ -39,7 +39,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kizitonwose.calendar.compose.CalendarLayoutInfo
@@ -47,13 +46,17 @@ import com.kizitonwose.calendar.compose.CalendarState
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
+import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
+import com.kizitonwose.calendar.core.yearMonth
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -76,7 +79,7 @@ fun CalendarScreen() {
     val daysOfWeek = remember { daysOfWeek() }
     val coroutineScope = rememberCoroutineScope()
     val selections = rememberSaveable { mutableStateOf(listOf<LocalDate>()) }
-    var isWeekState by rememberSaveable { mutableStateOf(false) }
+    var isWeek by rememberSaveable { mutableStateOf(false) }
 
     val weekState = rememberWeekCalendarState(
         startDate = startMonth.atStartOfMonth(),
@@ -99,45 +102,39 @@ fun CalendarScreen() {
             .background(Color.White)
             .pointerInput(state) {
                 detectDragGestures { change, dragAmount ->
-
-                    isWeekState = dragAmount.y < 0
-
-//                    coroutineScope.launch {
-//                        if (dragAmount.x < 0 && dragAmount.y > 20) {
-//                            if (isWeekState) {
-//                                weekState.animateScrollToWeek(weekState.startDate)
-//                            } else {
-//                                state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
-//                            }
-//                        }else{
-//                            if (isWeekState) {
-//                                weekState.animateScrollToWeek(weekState.startDate)
-//                            }else{
-//                                state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
-//                            }
-//                        }
-//                    }
+                    isWeek = dragAmount.y < 0
                 }
             })
     {
         CalendarTitle(
             onPrevious = {
                 coroutineScope.launch {
-                    state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.previousMonth)
+                    if (isWeek) {
+                        val prevWeek = weekState.firstVisibleWeek.days.first().date.minusDays(1)
+                        weekState.animateScrollToWeek(prevWeek)
+                    } else {
+                        state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.previousMonth)
+                    }
                 }
             },
             onNext = {
                 coroutineScope.launch {
-                    state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
+                    if (isWeek) {
+                        val nextWeek = weekState.firstVisibleWeek.days.last().date.plusDays(1)
+                        weekState.animateScrollToWeek(nextWeek)
+                    } else {
+                        state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
+                    }
                 }
             },
-            year = visibleMonth.yearMonth.year.toString(),
-            month = visibleMonth.yearMonth.monthValue.toString()
+            isWeek = isWeek,
+            monthState = state,
+            weekState = weekState
         )
 
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
-        AnimatedVisibility(visible = !isWeekState) {
+        AnimatedVisibility(visible = !isWeek) {
             HorizontalCalendar(
                 modifier = Modifier
                     .testTag("Calendar"),
@@ -199,7 +196,7 @@ fun CalendarScreen() {
         }
 
         // Week Calendar
-        AnimatedVisibility(visible = isWeekState) {
+        AnimatedVisibility(visible = isWeek) {
             WeekCalendar(
                 modifier = Modifier,
                 userScrollEnabled = false,
@@ -240,9 +237,16 @@ fun CalendarScreen() {
 fun CalendarTitle(
     onPrevious: () -> Unit,
     onNext: () -> Unit,
-    year: String,
-    month: String
+    isWeek: Boolean,
+    monthState: CalendarState,
+    weekState: WeekCalendarState
 ) {
+    val visibleMonth = rememberFirstVisibleMonthAfterScroll(state = monthState)
+    val visibleWeek = rememberFirstVisibleWeekAfterScroll(state = weekState)
+
+    val currentMonth =
+        if (isWeek) visibleWeek.days.first().date.yearMonth else visibleMonth.yearMonth
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -263,7 +267,7 @@ fun CalendarTitle(
             modifier = Modifier,
             text = stringResource(
                 id = R.string.unit_calendar_date,
-                formatArgs = arrayOf(year, month)
+                formatArgs = arrayOf(currentMonth.year, currentMonth.month)
             ),
             fontSize = 24.sp
         )
@@ -276,12 +280,6 @@ fun CalendarTitle(
             contentDescription = null
         )
     }
-}
-
-@Preview
-@Composable
-fun CalendarTitlePreview() {
-    CalendarTitle(onPrevious = { }, onNext = {}, "2024", "1")
 }
 
 @Composable
@@ -400,6 +398,37 @@ private fun CalendarLayoutInfo.firstMostVisibleMonth(): CalendarMonth? {
             }
         }?.month
     }
+}
+
+/**
+ * Returns the first visible month in a paged calendar **after** scrolling stops.
+ *
+ * @see [rememberFirstCompletelyVisibleMonth]
+ * @see [rememberFirstMostVisibleMonth]
+ */
+@Composable
+fun rememberFirstVisibleMonthAfterScroll(state: CalendarState): CalendarMonth {
+    val visibleMonth = remember(state) { mutableStateOf(state.firstVisibleMonth) }
+    LaunchedEffect(state) {
+        snapshotFlow { state.isScrollInProgress }
+            .filter { scrolling -> !scrolling }
+            .collect { visibleMonth.value = state.firstVisibleMonth }
+    }
+    return visibleMonth.value
+}
+
+/**
+ * Find first visible week in a paged week calendar **after** scrolling stops.
+ */
+@Composable
+fun rememberFirstVisibleWeekAfterScroll(state: WeekCalendarState): Week {
+    val visibleWeek = remember(state) { mutableStateOf(state.firstVisibleWeek) }
+    LaunchedEffect(state) {
+        snapshotFlow { state.isScrollInProgress }
+            .filter { scrolling -> !scrolling }
+            .collect { visibleWeek.value = state.firstVisibleWeek }
+    }
+    return visibleWeek.value
 }
 
 private fun log(msg: Any?) {
