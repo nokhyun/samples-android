@@ -1,6 +1,6 @@
 import com.nokhyun.playground1.Configuration
 plugins {
-    alias(libs.plugins.com.android.library)
+    id(libs.plugins.com.android.library.get().pluginId)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     id(libs.plugins.nokhyun.hilt.get().pluginId)
 }

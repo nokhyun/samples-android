@@ -15,7 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -44,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (application as PlaygroundApplication).initializerSet
             .onEach {
-            logger { "initializer: $it" }
-        }.filterIsInstance<FirstInitializer>()
+                logger { "initializer: $it" }
+            }.filterIsInstance<FirstInitializer>()
             .let {
                 it[0]()
             }
@@ -54,14 +57,19 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             logger { "controller: $controller :: destination: $destination :: arguments: $arguments" }
         }
 
-        screenSizeController.topLevelScreenSizeInit(resources.getBoolean(R.bool.isTablet), binding, navController) {
+        screenSizeController.topLevelScreenSizeInit(
+            resources.getBoolean(R.bool.isTablet),
+            binding,
+            navController
+        ) {
             // TODO Processing after navigation view (NavigationView 이후 처리) 공통!
         }
 
@@ -72,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 //        check(false) {
 //
 //        }
-
+        retryTest()
         val value1: Any? = null
 
         value1.guard {
@@ -89,13 +97,45 @@ class MainActivity : AppCompatActivity() {
 //            }
 //            logger { "headerViewGroup: $headerViewGroup" }
 //        }
+    }
 
+    sealed interface Result {
+        data object Success : Result
+        data object Failure : Result
+    }
+
+    private fun retryTest() {
+        flowOf(1, 2, 3, 4, 5)
+            .onEach {
+                if (it > 2) {
+                    logger { "retryTest onEach: $it" }
+//                    throw Exception()
+                }
+            }
+            .retry(2)
+//                .retryWhen { cause, attempt ->
+//                    logger { "retryTest attempt: $attempt" }
+//                    if (cause is Exception && attempt <= 2){
+//                        emit(100)
+//                        true
+//                    } else{
+//                        emit(200)
+//                        false
+//                    }
+//                }
+            .catch {
+                logger { "retryTest catch" }
+            }
+            .onCompletion {
+                logger { "retryTest onCompletion" }
+            }
+            .launchIn(lifecycleScope)
     }
 
     private fun some() {
         val f = flowOf(1, 2, 3, 4, 5)
             .onEach {
-                logger { "onEach: $it" }
+//                logger { "onEach: $it" }
                 if (it == 4) throw IOException("Test")
             }
 //            .retry(3){
@@ -103,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 //                (it is IOException).also { if(it) delay(1000L) }
 //            }
             .retryWhen { cause: Throwable, attempt: Long ->
-                logger { "attempt: $attempt" }
+//                logger { "attempt: $attempt" }
                 if (cause is IOException && attempt < 2) {
                     delay(1000L)
                     true
@@ -113,14 +153,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .catch {
-                logger { "catch!!" }
+//                logger { "catch!!" }
                 if (it !is IOException) throw it
             }
 //            .launchIn(lifecycleScope)
 
         lifecycleScope.launch {
             f.collect {
-                logger { "collect: $it" }
+//                logger { "collect: $it" }
             }
         }
     }

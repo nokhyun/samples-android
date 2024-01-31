@@ -1,43 +1,48 @@
 [versions]
-kotlin-android = "8.1.3"
-kotlin-gradle = "1.9.20"
-ksp = "1.9.20-1.0.14"
+kotlin-android = "8.2.2"
+kotlin-gradle = "1.9.21"
+ksp = "1.9.21-1.0.16"
 gradle = "8.1.4"
 kotlinGradlePlugin = "1.9.20"
-navigationSafeArgsGradlePlugin = "2.5.3"
+navigationSafeArgsGradlePlugin = "2.7.6"
 retrofit = "2.9.0"
 retrofit-serializationAdapter = "1.0.0"
-okhttp = "4.11.0"
-serialization = "1.5.0"
+okhttp = "4.12.0"
+serialization = "1.6.2"
 serialization-plugins = "1.8.22"
 plugin-serialization = "1.8.22"
-fragment = "1.6.0"
+fragment = "1.6.2"
 hilt = "2.48.1"
 serialization-converter = "1.0.0"
-paging3 = "3.1.1"
+paging3 = "3.2.1"
 
 tossPay = "0.1.9"
-compose-activity = "1.8.0"
+compose-activity = "1.8.2"
 compose-ui = "1.5.4"
-compose-uiTooling = "1.5.4"
-compose-foundation = "1.5.4"
-compose-material = "1.5.4"
-compose-viewModel = "2.6.2"
+compose-uiTooling = "1.6.0"
+compose-foundation = "1.6.0"
+compose-material = "1.6.0"
+compose-viewModel = "2.7.0"
 compose-coil = "2.4.0"
 compose-paging3 = "3.3.0-alpha02"
-compose-navigation = "2.7.4"
+compose-navigation = "2.7.6"
 compose-vico = "1.8.0"
-compose-material3 = "1.2.0-alpha10"
+compose-material3 = "1.2.0-rc01"
 androidxHiltNavigationCompose = "1.1.0"
-agp = "8.2.0"
+agp = "8.2.2"
 org-jetbrains-kotlin-android = "1.9.20"
-core-ktx = "1.9.0"
+core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 appcompat = "1.6.1"
-material = "1.9.0"
-org-jetbrains-kotlin-jvm = "1.9.0"
+material = "1.11.0"
+org-jetbrains-kotlin-jvm = "1.9.21"
+
+# thrid-party
+calendar = "2.4.1"
+navigationFragmentKtx = "2.7.6"
+navigationUiKtx = "2.7.6"
 
 [libraries]
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
@@ -55,7 +60,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.re
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 paging3 = { module = "androidx.paging:paging-runtime", version.ref = "paging3" }
 paging3-compose = { module = "androidx.paging:paging-compose", version.ref = "compose-paging3" }
-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3"}
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 
 # compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
@@ -65,8 +70,8 @@ compose-foundation = { module = "androidx.compose.foundation:foundation", versio
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose-material" }
 compose-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewModel" }
 compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "compose-coil" }
-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation"}
-compose-vico = { module = "com.patrykandpatrick.vico:compose-m2", version.ref = "compose-vico"}
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+compose-vico = { module = "com.patrykandpatrick.vico:compose-m2", version.ref = "compose-vico" }
 compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 customview-poolingcontainer = { group = "androidx.customview", name = "customview-poolingcontainer", version = "1.0.0" }
 ui-android = { group = "androidx.compose.ui", name = "ui-android", version = "1.5.0" }
@@ -77,6 +82,10 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+# third-party
+thirdParty-calendar = { module = "com.kizitonwose.calendar:compose", version.ref = "calendar" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
 [plugins]
 plugin-serialization = { id = "plugin.serialization", version.ref = "serialization-plugins" }
@@ -89,4 +98,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-application = { id = "com.android.application", version.ref = "kotlin-android" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-gradle" }
 
-nokhyun-hilt = { id = "nokhyun.android.hilt"}
+nokhyun-hilt = { id = "nokhyun.android.hilt" }
+nokhyun-compose = { id = "nokhyun.compose" }

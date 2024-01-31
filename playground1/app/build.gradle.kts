@@ -45,10 +45,6 @@ android {
     }
 }
 
-//kapt {
-//    correctErrorTypes = true
-//}
-
 dependencies {
     implementation(project(":feature:first"))
     implementation(project(":feature:second"))
@@ -56,6 +52,7 @@ dependencies {
     implementation(project(":feature:uiExam"))
     implementation(project(":feature:exam-nav"))
     implementation(project(":feature:startup-api"))
+    implementation(project(":feature:calendar"))
 
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

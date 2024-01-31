@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unit_calendar_date">%s년 %s월</string>
+    <string name="unit_year">년</string>
+    <string name="unit_month">월</string>
+</resources>
