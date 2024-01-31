@@ -1,5 +1,6 @@
 package com.nokhyun.calendar
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -75,8 +75,7 @@ fun CalendarScreen() {
     val endMonth = remember { currentMonth.plusMonths(500) } // Adjust as needed
     val daysOfWeek = remember { daysOfWeek() }
     val coroutineScope = rememberCoroutineScope()
-    val selections = remember { mutableStateListOf<LocalDate>() }
-
+    val selections = rememberSaveable { mutableStateOf(listOf<LocalDate>()) }
     var isWeekState by rememberSaveable { mutableStateOf(false) }
 
     val weekState = rememberWeekCalendarState(
@@ -98,12 +97,29 @@ fun CalendarScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .pointerInput(Unit) {
-                detectDragGestures { _, dragAmount ->
-                    isWeekState = dragAmount.y < -5
+            .pointerInput(state) {
+                detectDragGestures { change, dragAmount ->
+
+                    isWeekState = dragAmount.y < 0
+
+//                    coroutineScope.launch {
+//                        if (dragAmount.x < 0 && dragAmount.y > 20) {
+//                            if (isWeekState) {
+//                                weekState.animateScrollToWeek(weekState.startDate)
+//                            } else {
+//                                state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
+//                            }
+//                        }else{
+//                            if (isWeekState) {
+//                                weekState.animateScrollToWeek(weekState.startDate)
+//                            }else{
+//                                state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
+//                            }
+//                        }
+//                    }
                 }
-            }
-    ) {
+            })
+    {
         CalendarTitle(
             onPrevious = {
                 coroutineScope.launch {
@@ -125,37 +141,59 @@ fun CalendarScreen() {
             HorizontalCalendar(
                 modifier = Modifier
                     .testTag("Calendar"),
+                userScrollEnabled = false,
                 state = state,
                 dayContent = { day ->
-                    if (LocalDate.now().isEqual(day.date)) {
+                    if (LocalDate
+                            .now()
+                            .isEqual(day.date)
+                    ) {
                         Today(
                             day = day.date,
-                            isSelected = selections.contains(day.date)
+                            isSelected = selections.value.contains(day.date)
                         ) {
-                            if (selections.contains(it)) {
-                                selections.remove(it)
-                            } else {
-                                selections.clear()
-                                selections.add(it)
-                            }
+                            selections.value
+                                .toMutableList()
+                                .apply {
+                                    if (contains(it)) {
+                                        remove(it)
+                                    } else {
+                                        clear()
+                                        add(it)
+                                    }
+                                }
+                                .also {
+                                    selections.value = it
+                                }
                         }
                     } else {
                         Day(
                             day = day.date,
-                            isSelected = selections.contains(day.date)
+                            isSelected = selections.value.contains(day.date)
                         ) {
-                            if (selections.contains(it)) {
-                                selections.remove(it)
-                            } else {
-                                selections.clear()
-                                selections.add(it)
-                            }
+                            selections.value
+                                .toMutableList()
+                                .apply {
+                                    if (contains(it)) {
+                                        remove(it)
+                                    } else {
+                                        clear()
+                                        add(it)
+                                    }
+                                }
+                                .also {
+                                    selections.value = it
+                                }
                         }
                     }
                 },
                 monthHeader = { month ->
-                    val daysOfWeek = month.weekDays.first().map { it.date.dayOfWeek }
-                    MonthHeader(daysOfWeek = daysOfWeek)
+                    month.weekDays
+                        .first()
+                        .map { it.date.dayOfWeek }
+                        .also { daysOfWeek ->
+                            MonthHeader(daysOfWeek = daysOfWeek)
+                        }
                 }
             )
         }
@@ -164,29 +202,39 @@ fun CalendarScreen() {
         AnimatedVisibility(visible = isWeekState) {
             WeekCalendar(
                 modifier = Modifier,
+                userScrollEnabled = false,
                 state = weekState,
                 dayContent = { day ->
                     Day(
                         day = day.date,
-                        isSelected = selections.contains(day.date)
+                        isSelected = selections.value.contains(day.date)
                     ) {
-                        if (selections.contains(it)) {
-                            selections.remove(it)
-                        } else {
-                            selections.clear()
-                            selections.add(it)
-                        }
+                        selections.value
+                            .toMutableList()
+                            .apply {
+                                if (contains(it)) {
+                                    remove(it)
+                                } else {
+                                    clear()
+                                    add(it)
+                                }
+                            }
+                            .also {
+                                selections.value = it
+                            }
                     }
                 },
                 weekHeader = {
-                    val daysOfWeek = it.days.map { it.date.dayOfWeek }
-                    MonthHeader(daysOfWeek = daysOfWeek)
+                    it.days
+                        .map { it.date.dayOfWeek }
+                        .also { daysOfWeek ->
+                            MonthHeader(daysOfWeek = daysOfWeek)
+                        }
                 }
             )
         }
     }
 }
-
 
 @Composable
 fun CalendarTitle(
@@ -207,7 +255,8 @@ fun CalendarTitle(
             modifier = Modifier
                 .padding(start = 8.dp)
                 .clickable { onPrevious() },
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+            contentDescription = null
         )
 
         Text(
@@ -223,7 +272,8 @@ fun CalendarTitle(
             modifier = Modifier
                 .padding(end = 8.dp)
                 .clickable { onNext() },
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = null
         )
     }
 }
@@ -238,10 +288,14 @@ fun CalendarTitlePreview() {
 fun MonthHeader(
     daysOfWeek: List<DayOfWeek>
 ) {
-    Row {
+    Row(
+        modifier = Modifier
+    ) {
         daysOfWeek.forEach {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 text = it.name.substring(0..2),
                 textAlign = TextAlign.Center
             )
@@ -346,4 +400,8 @@ private fun CalendarLayoutInfo.firstMostVisibleMonth(): CalendarMonth? {
             }
         }?.month
     }
+}
+
+private fun log(msg: Any?) {
+    Log.e("calendar Log: ", msg.toString())
 }
