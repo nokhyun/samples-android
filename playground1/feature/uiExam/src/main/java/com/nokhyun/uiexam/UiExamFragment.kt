@@ -32,6 +32,7 @@ import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.RememberCoroutineScope.RememberCoroutineScopeScreen
 import com.nokhyun.uiexam.disposableEffectExam.DisposableEffectScreen
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
+import com.nokhyun.uiexam.launchedEffectExam.LaunchedEffectScreen
 import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
 import com.nokhyun.uiexam.rememberUpdatedStateExam.RememberUpdatedStateScreen
 import com.nokhyun.uiexam.sideEffectExam.SideEffectScreen
@@ -123,6 +124,7 @@ fun ExamUI(
 
             RememberUpdatedStateScreen()
             RememberCoroutineScopeScreen()
+            LaunchedEffectScreen()
         }
     }
 }
