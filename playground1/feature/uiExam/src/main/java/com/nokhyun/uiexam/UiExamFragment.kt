@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
 import com.nokhyun.uiexam.RememberCoroutineScope.RememberCoroutineScopeScreen
 import com.nokhyun.uiexam.disposableEffectExam.DisposableEffectScreen
+import com.nokhyun.uiexam.draggableExam.DraggableScreen
 import com.nokhyun.uiexam.immutableExam.StableTestScreen
 import com.nokhyun.uiexam.launchedEffectExam.LaunchedEffectScreen
 import com.nokhyun.uiexam.produceStateExam.ProduceStateScreen
@@ -125,6 +126,7 @@ fun ExamUI(
             RememberUpdatedStateScreen()
             RememberCoroutineScopeScreen()
             LaunchedEffectScreen()
+            DraggableScreen()
         }
     }
 }
