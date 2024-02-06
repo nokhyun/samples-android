@@ -18,7 +18,7 @@ paging3 = "3.2.1"
 
 tossPay = "0.1.9"
 compose-activity = "1.8.2"
-compose-ui = "1.5.4"
+compose-ui = "1.6.0"
 compose-uiTooling = "1.6.0"
 compose-foundation = "1.6.0"
 compose-material = "1.6.0"

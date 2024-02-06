@@ -40,6 +40,7 @@ import com.nokhyun.uiexam.sideEffectExam.SideEffectScreen
 import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
+import com.nokhyun.uiexam.swipeableExam.SwipeableScreen
 import com.nokhyun.uiexam.text.MyTextScreen
 
 class UiExamFragment : Fragment() {
@@ -127,6 +128,7 @@ fun ExamUI(
             RememberCoroutineScopeScreen()
             LaunchedEffectScreen()
             DraggableScreen()
+            SwipeableScreen()
         }
     }
 }
