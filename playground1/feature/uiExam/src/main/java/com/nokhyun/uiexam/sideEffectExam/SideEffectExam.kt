@@ -26,7 +26,7 @@ fun SideEffectScreen() {
 
 @Composable
 fun rememberAnalytics(): Analytics {
-    val analytics = Analytics()
+    val analytics = remember { Analytics() }
 
     /*
     * Compose state 를 Compose 에서 관리하지 않는 개체와 공유하려면 recomposition 마다 호출이 되는 SideEffect 가 있다.
