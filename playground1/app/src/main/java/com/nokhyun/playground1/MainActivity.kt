@@ -1,10 +1,13 @@
 package com.nokhyun.playground1
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -13,6 +16,7 @@ import com.nokhyun.first.FirstInitializer
 import com.nokhyun.playground1.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
@@ -20,6 +24,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -31,7 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     private val screenSizeController: ScreenSizeController by lazy { ScreenSizeControllerImpl() }
     private lateinit var navController: NavController
-
+    private var splashScreen: SplashScreen? = null
+    private val splashState = MutableStateFlow(true)
     private val statusBarHeight: Int
         @SuppressLint("DiscouragedApi", "InternalInsetResource")
         get() {
@@ -44,7 +50,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
         (application as PlaygroundApplication).initializerSet
             .onEach {
                 logger { "initializer: $it" }
@@ -97,6 +105,8 @@ class MainActivity : AppCompatActivity() {
 //            }
 //            logger { "headerViewGroup: $headerViewGroup" }
 //        }
+
+        splash()
     }
 
     sealed interface Result {
@@ -161,6 +171,21 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             f.collect {
 //                logger { "collect: $it" }
+            }
+        }
+    }
+
+    private fun splash() {
+        lifecycleScope.launch {
+            launch {
+                splashState.collect {
+                    splashScreen?.setKeepOnScreenCondition { it }
+                }
+            }
+
+            launch {
+                delay(2000L)
+                splashState.update { false }
             }
         }
     }
