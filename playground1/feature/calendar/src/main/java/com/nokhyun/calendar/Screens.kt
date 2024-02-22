@@ -202,23 +202,47 @@ fun CalendarScreen() {
                 userScrollEnabled = false,
                 state = weekState,
                 dayContent = { day ->
-                    Day(
-                        day = day.date,
-                        isSelected = selections.value.contains(day.date)
+                    if (LocalDate
+                            .now()
+                            .isEqual(day.date)
                     ) {
-                        selections.value
-                            .toMutableList()
-                            .apply {
-                                if (contains(it)) {
-                                    remove(it)
-                                } else {
-                                    clear()
-                                    add(it)
+                        Today(
+                            day = day.date,
+                            isSelected = selections.value.contains(day.date)
+                        ) {
+                            selections.value
+                                .toMutableList()
+                                .apply {
+                                    if (contains(it)) {
+                                        remove(it)
+                                    } else {
+                                        clear()
+                                        add(it)
+                                    }
                                 }
-                            }
-                            .also {
-                                selections.value = it
-                            }
+                                .also {
+                                    selections.value = it
+                                }
+                        }
+                    } else {
+                        Day(
+                            day = day.date,
+                            isSelected = selections.value.contains(day.date)
+                        ) {
+                            selections.value
+                                .toMutableList()
+                                .apply {
+                                    if (contains(it)) {
+                                        remove(it)
+                                    } else {
+                                        clear()
+                                        add(it)
+                                    }
+                                }
+                                .also {
+                                    selections.value = it
+                                }
+                        }
                     }
                 },
                 weekHeader = {
@@ -239,7 +263,7 @@ fun CalendarTitle(
     onNext: () -> Unit,
     isWeek: Boolean,
     monthState: CalendarState,
-    weekState: WeekCalendarState
+    weekState: WeekCalendarState,
 ) {
     val visibleMonth = rememberFirstVisibleMonthAfterScroll(state = monthState)
     val visibleWeek = rememberFirstVisibleWeekAfterScroll(state = weekState)
@@ -284,7 +308,7 @@ fun CalendarTitle(
 
 @Composable
 fun MonthHeader(
-    daysOfWeek: List<DayOfWeek>
+    daysOfWeek: List<DayOfWeek>,
 ) {
     Row(
         modifier = Modifier
@@ -305,7 +329,7 @@ fun MonthHeader(
 fun Day(
     day: CalendarDay,
     isSelected: Boolean,
-    onClick: (CalendarDay) -> Unit
+    onClick: (CalendarDay) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -328,7 +352,7 @@ fun Day(
 fun Day(
     day: LocalDate,
     isSelected: Boolean,
-    onClick: (LocalDate) -> Unit
+    onClick: (LocalDate) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -351,7 +375,7 @@ fun Day(
 fun Today(
     day: LocalDate,
     isSelected: Boolean,
-    onClick: (LocalDate) -> Unit
+    onClick: (LocalDate) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -372,7 +396,7 @@ fun Today(
 
 @Composable
 fun rememberFirstMostVisibleMonth(
-    state: CalendarState
+    state: CalendarState,
 ): CalendarMonth {
     var visibleMonth by remember(state) { mutableStateOf(state.firstVisibleMonth) }
 
