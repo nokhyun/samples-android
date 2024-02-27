@@ -1,11 +1,16 @@
 package com.nokhyun.uiexam.RememberCoroutineScope
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -14,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nokhyun.uiexam.logger
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RememberCoroutineScopeScreen(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
@@ -28,9 +35,20 @@ fun RememberCoroutineScopeScreen(
     * */
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(
+//    Scaffold(
+    BottomSheetScaffold(
         modifier = Modifier.height(200.dp), // Column 내에서 사용중이라 height 설정.
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        sheetContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .background(Color.Blue)
+            ) {
+                Text(text = "5252")
+            }
+        }
     ) {
         Column(
             modifier = Modifier.padding(it)
