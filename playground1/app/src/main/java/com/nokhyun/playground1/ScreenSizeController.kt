@@ -1,5 +1,7 @@
 package com.nokhyun.playground1
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.core.view.GravityCompat
@@ -57,6 +59,12 @@ class ScreenSizeControllerImpl : ScreenSizeController {
         } else {
             logger { "Mobile" }
             binding.bottomNavView?.setupWithBottomNavigationController(navController)
+            binding.toolbar?.setNavigationOnClickListener {
+                Intent(binding.root.context, PreMainActivity::class.java).also {
+                    binding.root.context.startActivity(it)
+                    (binding.root.context as Activity).finish()
+                }
+            }
         }
     }
 }

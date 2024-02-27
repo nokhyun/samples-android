@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.nokhyun.exam_nav.ExamNavActivity
+import com.nokhyun.uiexam.CanvasExam.CanvasExamScreen
 import com.nokhyun.uiexam.RememberCoroutineScope.RememberCoroutineScopeScreen
 import com.nokhyun.uiexam.disposableEffectExam.DisposableEffectScreen
 import com.nokhyun.uiexam.draggableExam.DraggableScreen
@@ -59,6 +60,7 @@ import com.nokhyun.uiexam.sideEffectExam.SideEffectScreen
 import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
+import com.nokhyun.uiexam.swipeableExam.SwipeableScreen
 import com.nokhyun.uiexam.text.MyTextScreen
 
 class UiExamFragment : Fragment() {
@@ -150,6 +152,8 @@ fun ExamUI(
             RememberCoroutineScopeScreen()
             LaunchedEffectScreen()
             DraggableScreen()
+            SwipeableScreen()
+            CanvasExamScreen()
             BasicTextFieldScreen()
         }
     }
