@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(project(":core:network-api"))
+    implementation(project(":feature:common"))
     compileOnly(project(":feature:startup-api"))
     runtimeOnly(project(":core:network-impl"))
 
