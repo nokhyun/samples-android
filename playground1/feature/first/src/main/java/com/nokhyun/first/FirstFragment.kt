@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
@@ -58,9 +57,14 @@ class FirstFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentFirstBinding.inflate(layoutInflater)
-        sharedElementEnterTransition = android.transition.TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
+        sharedElementEnterTransition = android.transition.TransitionInflater.from(context)
+            .inflateTransition(R.transition.transition_test)
 
         return binding.run {
             lifecycleOwner = this@FirstFragment.viewLifecycleOwner
@@ -88,6 +92,9 @@ class FirstFragment : Fragment() {
 //        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
         viewLifecycleOwner.lifecycleScope.launch {
             coroutineLogger { fakeService.todo().id.toString() }
+            binding.rvFirst.run {
+
+            }
         }
     }
 
