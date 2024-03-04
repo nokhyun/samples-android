@@ -61,7 +61,9 @@ import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
 import com.nokhyun.uiexam.swipeableExam.SwipeableScreen
+import com.nokhyun.uiexam.text.CustomVisualTransformation
 import com.nokhyun.uiexam.text.MyTextScreen
+import com.nokhyun.uiexam.text.VisualTransformationScreen
 
 class UiExamFragment : Fragment() {
 
@@ -155,6 +157,7 @@ fun ExamUI(
             SwipeableScreen()
             CanvasExamScreen()
             BasicTextFieldScreen()
+            VisualTransformationScreen()
         }
     }
 }
@@ -212,6 +215,7 @@ fun BasicTextFieldScreen() {
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 //        visualTransformation = creditCardTransformation,
+        visualTransformation = CustomVisualTransformation(),
         decorationBox = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
