@@ -61,6 +61,7 @@ import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
 import com.nokhyun.uiexam.swipeableExam.SwipeableScreen
+import com.nokhyun.uiexam.text.BasicTextField2Screen
 import com.nokhyun.uiexam.text.CustomVisualTransformation
 import com.nokhyun.uiexam.text.MyTextScreen
 import com.nokhyun.uiexam.text.VisualTransformationScreen
@@ -158,6 +159,7 @@ fun ExamUI(
             CanvasExamScreen()
             BasicTextFieldScreen()
             VisualTransformationScreen()
+            BasicTextField2Screen()
         }
     }
 }
