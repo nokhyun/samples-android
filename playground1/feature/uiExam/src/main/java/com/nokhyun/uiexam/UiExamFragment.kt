@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -61,7 +62,11 @@ import com.nokhyun.uiexam.snapshotFlow.SnapshotFlowScreen
 import com.nokhyun.uiexam.stableExam.StableComposable
 import com.nokhyun.uiexam.stateHolderExam.FavoriteFoodInput
 import com.nokhyun.uiexam.swipeableExam.SwipeableScreen
+import com.nokhyun.uiexam.text.BasicTextField2Screen
+import com.nokhyun.uiexam.text.CustomVisualTransformation
 import com.nokhyun.uiexam.text.MyTextScreen
+import com.nokhyun.uiexam.text.VisualTransformationScreen
+import kotlinx.coroutines.launch
 
 class UiExamFragment : Fragment() {
 
@@ -111,6 +116,7 @@ fun ExamUI(
     modifier: Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
 
     Box(
         modifier = modifier
@@ -155,6 +161,12 @@ fun ExamUI(
             SwipeableScreen()
             CanvasExamScreen()
             BasicTextFieldScreen()
+            VisualTransformationScreen()
+            BasicTextField2Screen {
+                scope.launch {
+                    scrollState.scrollTo(scrollState.maxValue)
+                }
+            }
         }
     }
 }
@@ -212,6 +224,7 @@ fun BasicTextFieldScreen() {
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 //        visualTransformation = creditCardTransformation,
+        visualTransformation = CustomVisualTransformation(),
         decorationBox = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
