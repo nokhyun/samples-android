@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -65,6 +66,7 @@ import com.nokhyun.uiexam.text.BasicTextField2Screen
 import com.nokhyun.uiexam.text.CustomVisualTransformation
 import com.nokhyun.uiexam.text.MyTextScreen
 import com.nokhyun.uiexam.text.VisualTransformationScreen
+import kotlinx.coroutines.launch
 
 class UiExamFragment : Fragment() {
 
@@ -114,6 +116,7 @@ fun ExamUI(
     modifier: Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
 
     Box(
         modifier = modifier
@@ -159,7 +162,11 @@ fun ExamUI(
             CanvasExamScreen()
             BasicTextFieldScreen()
             VisualTransformationScreen()
-            BasicTextField2Screen()
+            BasicTextField2Screen {
+                scope.launch {
+                    scrollState.scrollTo(scrollState.maxValue)
+                }
+            }
         }
     }
 }

@@ -7,10 +7,14 @@ import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.text2.input.TextFieldCharSequence
 import androidx.compose.foundation.text2.input.TextFieldLineLimits
 import androidx.compose.foundation.text2.input.TextFieldState
+import androidx.compose.foundation.text2.input.forEachTextValue
 import androidx.compose.foundation.text2.input.textAsFlow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -24,12 +28,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalFoundationApi::class)
 fun Flow<TextFieldCharSequence>.isUserNameMatches(): Flow<Boolean> = this.mapLatest {
+    if (it.isEmpty()) return@mapLatest false
+
     !it.matches("""^[a-zA-Z가-힣]{2,16}$""".toRegex())
 }
 
@@ -39,17 +44,34 @@ class BasicTextField2ExamViewModel : ViewModel() {
     val userName = TextFieldState()
     val userNameHasError: StateFlow<Boolean> = userName.textAsFlow()
         .debounce(500)
-        .filter { it.isNotEmpty() }
         .isUserNameMatches()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    var userNameHasError2 by mutableStateOf(false)
+
+    suspend fun verifyUsername() {
+        userName.forEachTextValue {
+            userNameHasError2 = if (it.isEmpty()) {
+                false
+            } else {
+                !it.matches("""^[a-zA-Z가-힣]{2,16}$""".toRegex())
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BasicTextField2Screen(
-    viewModel: BasicTextField2ExamViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: BasicTextField2ExamViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    onScrollDown: () -> Unit
 ) {
     val errorState by viewModel.userNameHasError.collectAsStateWithLifecycle()
+
+    /* 방법2 */
+    LaunchedEffect(Unit) {
+        viewModel.verifyUsername()
+    }
 
     Column(
         modifier = Modifier
@@ -73,6 +95,8 @@ fun BasicTextField2Screen(
         )
 
         if (errorState) {
+//        if (viewModel.userNameHasError2) {
+            onScrollDown()
             Text(
                 text = "Error",
                 fontWeight = FontWeight.Bold,
