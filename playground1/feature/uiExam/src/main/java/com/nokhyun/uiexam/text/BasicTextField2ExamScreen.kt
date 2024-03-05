@@ -2,10 +2,14 @@ package com.nokhyun.uiexam.text
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.BasicTextField2
@@ -15,25 +19,31 @@ import androidx.compose.foundation.text2.input.TextFieldCharSequence
 import androidx.compose.foundation.text2.input.TextFieldLineLimits
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.foundation.text2.input.TextObfuscationMode
-import androidx.compose.foundation.text2.input.allCaps
 import androidx.compose.foundation.text2.input.forEachTextValue
 import androidx.compose.foundation.text2.input.maxLengthInChars
 import androidx.compose.foundation.text2.input.textAsFlow
-import androidx.compose.foundation.text2.input.then
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
@@ -78,13 +88,18 @@ class BasicTextField2ExamViewModel : ViewModel() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BasicTextField2Screen(
     viewModel: BasicTextField2ExamViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     onScrollDown: () -> Unit
 ) {
     val errorState by viewModel.userNameHasError.collectAsStateWithLifecycle()
+    val textFieldColor = if (errorState) Color.Red else Color.Black
+
+    val testState by rememberSaveable(stateSaver = TextFieldState.Saver) {
+        mutableStateOf(viewModel.userName)
+    }
 
     /* 방법2 */
     LaunchedEffect(Unit) {
@@ -101,34 +116,69 @@ fun BasicTextField2Screen(
             fontSize = 28.sp,
         )
 
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+
         BasicTextField2(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp)
                 .border(
-                    width = 2.dp,
-                    color = Color.Black,
-                    shape = RectangleShape
-                )
-                .padding(16.dp),
+                    width = 1.dp,
+                    color = textFieldColor,
+                    shape = RoundedCornerShape(32.dp)
+                ),
             textStyle = TextStyle(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color.Black
+                color = textFieldColor
             ),
-            state = viewModel.userName,
+            state = testState,
             lineLimits = TextFieldLineLimits.SingleLine,
-            inputTransformation = DigitOnlyTransformation()
-                .then(InputTransformation.maxLengthInChars(6))
-                .then(InputTransformation.allCaps(Locale.current)),
+//            inputTransformation = DigitOnlyTransformation()
+//                .then(InputTransformation.maxLengthInChars(6)),
+            decorator = { innerTextField ->
+                val text = testState.text
+                val interactionSource = remember { MutableInteractionSource() }
+                val isValidationSuccess = testState.text.length > 1 && !errorState
+
+                TextFieldDefaults.DecorationBox(
+                    value = text.toString(),
+                    placeholder = { Text(text = "Input your name, please.") },
+                    enabled = false,
+                    singleLine = true,
+                    innerTextField = innerTextField,
+                    visualTransformation = VisualTransformation.None,
+                    interactionSource = interactionSource,
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
+                    trailingIcon = {
+                        if (isValidationSuccess) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(32.dp)
+                            )
+                        }
+                    },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Default.Info, contentDescription = null)
+                    },
+                    container = {
+//                        Text(text = "container!!!")
+                    }
+                )
+            }
         )
         if (errorState) {
 //        if (viewModel.userNameHasError2) {
             onScrollDown()
             Text(
-                text = "Error",
+                modifier = Modifier
+                    .padding(start = 24.dp),
+                text = "error",
                 fontWeight = FontWeight.Bold,
-                fontSize = 28.sp,
+                fontSize = 20.sp,
                 color = Color.Red,
                 fontStyle = FontStyle.Italic
             )
@@ -145,11 +195,10 @@ fun BasicTextField2Screen(
                 .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp)
                 .border(
-                    width = 2.dp,
+                    width = 1.dp,
                     color = Color.Black,
-                    shape = RectangleShape
-                )
-                .padding(16.dp),
+                    shape = RoundedCornerShape(32.dp)
+                ),
             state = viewModel.password,
             textObfuscationMode = TextObfuscationMode.RevealLastTyped,
             textStyle = TextStyle(
@@ -158,6 +207,30 @@ fun BasicTextField2Screen(
                 color = Color.Black
             ),
             inputTransformation = InputTransformation.maxLengthInChars(12),
+            decorator = { innerTextField ->
+                val interactionSource = remember { MutableInteractionSource() }
+
+                TextFieldDefaults.DecorationBox(
+                    value = viewModel.password.text.toString(),
+                    placeholder = { Text(text = "Input your password, please.") },
+                    enabled = false,
+                    singleLine = true,
+                    innerTextField = innerTextField,
+                    visualTransformation = VisualTransformation.None,
+                    interactionSource = interactionSource,
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .size(24.dp)
+                        )
+                    },
+                    container = {}
+                )
+            }
         )
     }
 }
