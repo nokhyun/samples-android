@@ -1,8 +1,11 @@
 package com.nokhyun.uiexam.text
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.BasicTextField2
@@ -11,6 +14,7 @@ import androidx.compose.foundation.text2.input.TextFieldBuffer
 import androidx.compose.foundation.text2.input.TextFieldCharSequence
 import androidx.compose.foundation.text2.input.TextFieldLineLimits
 import androidx.compose.foundation.text2.input.TextFieldState
+import androidx.compose.foundation.text2.input.TextObfuscationMode
 import androidx.compose.foundation.text2.input.allCaps
 import androidx.compose.foundation.text2.input.forEachTextValue
 import androidx.compose.foundation.text2.input.maxLengthInChars
@@ -24,11 +28,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
@@ -52,6 +58,7 @@ fun Flow<TextFieldCharSequence>.isUserNameMatches(): Flow<Boolean> = this.mapLat
 @OptIn(ExperimentalFoundationApi::class)
 class BasicTextField2ExamViewModel : ViewModel() {
 
+    val password = TextFieldState()
     val userName = TextFieldState()
     val userNameHasError: StateFlow<Boolean> = userName.textAsFlow()
         .debounce(500)
@@ -90,12 +97,20 @@ fun BasicTextField2Screen(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Title: BasicTextFieldExample",
+            text = "BasicTextFieldExample",
             fontSize = 28.sp,
         )
 
         BasicTextField2(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color.Black,
+                    shape = RectangleShape
+                )
+                .padding(16.dp),
             textStyle = TextStyle(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
@@ -105,9 +120,8 @@ fun BasicTextField2Screen(
             lineLimits = TextFieldLineLimits.SingleLine,
             inputTransformation = DigitOnlyTransformation()
                 .then(InputTransformation.maxLengthInChars(6))
-                .then(InputTransformation.allCaps(Locale.current))
+                .then(InputTransformation.allCaps(Locale.current)),
         )
-        
         if (errorState) {
 //        if (viewModel.userNameHasError2) {
             onScrollDown()
@@ -119,6 +133,32 @@ fun BasicTextField2Screen(
                 fontStyle = FontStyle.Italic
             )
         }
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = "BasicSecureTextField",
+            fontSize = 28.sp,
+        )
+
+        BasicSecureTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color.Black,
+                    shape = RectangleShape
+                )
+                .padding(16.dp),
+            state = viewModel.password,
+            textObfuscationMode = TextObfuscationMode.RevealLastTyped,
+            textStyle = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color.Black
+            ),
+            inputTransformation = InputTransformation.maxLengthInChars(12),
+        )
     }
 }
 
