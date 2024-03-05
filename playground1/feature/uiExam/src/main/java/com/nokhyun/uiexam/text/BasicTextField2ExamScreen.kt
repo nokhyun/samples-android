@@ -1,6 +1,7 @@
 package com.nokhyun.uiexam.text
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -158,6 +159,8 @@ fun BasicTextField2Screen(
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .size(32.dp)
+                                    .padding(end = 12.dp),
+                                tint = Color.Blue
                             )
                         }
                     },
