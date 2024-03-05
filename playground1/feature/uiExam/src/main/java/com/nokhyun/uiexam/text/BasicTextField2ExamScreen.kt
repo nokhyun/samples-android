@@ -3,12 +3,19 @@ package com.nokhyun.uiexam.text
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text2.BasicSecureTextField
 import androidx.compose.foundation.text2.BasicTextField2
+import androidx.compose.foundation.text2.input.InputTransformation
+import androidx.compose.foundation.text2.input.TextFieldBuffer
 import androidx.compose.foundation.text2.input.TextFieldCharSequence
 import androidx.compose.foundation.text2.input.TextFieldLineLimits
 import androidx.compose.foundation.text2.input.TextFieldState
+import androidx.compose.foundation.text2.input.allCaps
 import androidx.compose.foundation.text2.input.forEachTextValue
+import androidx.compose.foundation.text2.input.maxLengthInChars
 import androidx.compose.foundation.text2.input.textAsFlow
+import androidx.compose.foundation.text2.input.then
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,10 +27,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import com.nokhyun.uiexam.logger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -91,9 +102,12 @@ fun BasicTextField2Screen(
                 color = Color.Black
             ),
             state = viewModel.userName,
-            lineLimits = TextFieldLineLimits.SingleLine
+            lineLimits = TextFieldLineLimits.SingleLine,
+            inputTransformation = DigitOnlyTransformation()
+                .then(InputTransformation.maxLengthInChars(6))
+                .then(InputTransformation.allCaps(Locale.current))
         )
-
+        
         if (errorState) {
 //        if (viewModel.userNameHasError2) {
             onScrollDown()
@@ -104,6 +118,50 @@ fun BasicTextField2Screen(
                 color = Color.Red,
                 fontStyle = FontStyle.Italic
             )
+        }
+    }
+}
+
+/**
+ *  입력순서(필터링 | 입력변환)
+ * keyboard Input -> Input transformation -> TextField state -> output transformation -> visual output
+ * */
+@OptIn(ExperimentalFoundationApi::class)
+class DigitOnlyTransformation : InputTransformation {
+
+    override val keyboardOptions: KeyboardOptions =
+        KeyboardOptions(keyboardType = KeyboardType.Number)
+
+    override fun transformInput(
+        originalValue: TextFieldCharSequence,
+        valueWithChanges: TextFieldBuffer
+    ) {
+        logger { "originalValue: $originalValue :: valueWithChanges: $valueWithChanges" }
+        if (!valueWithChanges.asCharSequence().isDigitsOnly()) {
+            valueWithChanges.revertAllChanges()
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+
+interface OutputTransformation {
+    fun transformOutput(buffer: TextFieldBuffer)
+}
+
+@ExperimentalFoundationApi
+object VerificationCodeOutputTransformation : OutputTransformation {
+    override fun transformOutput(buffer: TextFieldBuffer) {
+        logger { "transformOutput buffer: $buffer" }
+        if (buffer.length > 6) return
+        val padCount = 6 - buffer.length
+
+        repeat(padCount) {
+            buffer.append(".")
+        }
+
+        if (!buffer.asCharSequence().isDigitsOnly()) {
+            buffer.revertAllChanges()
         }
     }
 }
