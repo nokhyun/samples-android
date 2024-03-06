@@ -12,7 +12,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
-    onClick: () -> Unit
+    onTwoClick: () -> Unit,
+    onProfileClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -24,7 +25,7 @@ fun HomeScreen(
                 .weight(1f)
                 .padding(start = 4.dp, end = 4.dp),
             shape = RoundedCornerShape(8.dp),
-            onClick = onClick
+            onClick = onTwoClick
         ) {
             Text(text = "NavigateToTwo")
         }
@@ -33,7 +34,7 @@ fun HomeScreen(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 4.dp, end = 4.dp),
-            onClick = onClick
+            onClick = onProfileClick
         ) {
             Text(text = "NavigateToDeepLink")
         }
