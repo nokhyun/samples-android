@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -36,7 +36,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExamNavHost(
     navHostController: NavHostController,
@@ -104,6 +104,7 @@ fun ExamNavHost(
             composable(IntroScreens.First.route) {
                 Button(onClick = { navHostController.navigate("Home") }) {
                     Text(text = "Hello World!")
+//                    deepLinkPendingIntent?.send()
                 }
             }
 
@@ -113,12 +114,18 @@ fun ExamNavHost(
 }
 
 internal fun NavGraphBuilder.mainGraph(navHostController: NavHostController) {
-    // TODO 데이터 전달 레퍼런스 볼 것
     composable(ExamNavScreens.Home.route) { backStackEntry ->
-        HomeScreen {
-            navHostController.navigate("Two/UserId1234")
-//                deepLinkPendingIntent?.send()
-        }
+        HomeScreen(
+            onTwoClick = {
+                navHostController.navigate("Two/UserId1234") {
+//                    popUpTo(navHostController.graph.findStartDestination().id)
+                    navHostController.navigate("Profile?id=123")
+                }
+            },
+            onProfileClick = {
+                navHostController.navigate("Profile?id=123")
+            }
+        )
     }
 
     composable(
@@ -127,7 +134,11 @@ internal fun NavGraphBuilder.mainGraph(navHostController: NavHostController) {
     ) { backStackEntry ->
         val userViewModel: UserViewModel = viewModel()
 
-        TwoScreen(navHostController, backStackEntry.arguments?.getString("userId") ?: "empty", userViewModel)
+        TwoScreen(
+            navHostController,
+            backStackEntry.arguments?.getString("userId") ?: "empty",
+            userViewModel
+        )
     }
 
     composable(

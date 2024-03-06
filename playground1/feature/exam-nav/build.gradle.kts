@@ -52,9 +52,8 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.uiTooling)
     implementation(libs.compose.viewModel)
-    implementation(libs.compose.material)
     implementation(libs.compose.navigation)
     implementation(libs.compose.vico)
     implementation(libs.compose.material3)
-    implementation("androidx.navigation:navigation-testing:2.7.5")
+    androidTestImplementation(libs.testing.navigation)
 }
