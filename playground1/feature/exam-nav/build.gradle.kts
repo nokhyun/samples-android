@@ -55,5 +55,6 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.compose.vico)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material)
     androidTestImplementation(libs.testing.navigation)
 }
