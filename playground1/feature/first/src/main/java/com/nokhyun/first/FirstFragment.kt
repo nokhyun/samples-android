@@ -6,14 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.children
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayout
 import com.nokhyun.first.databinding.FragmentFirstBinding
 import com.nokhyun.network.FakeService
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,6 +101,8 @@ class FirstFragment : Fragment() {
 
             }
         }
+
+        initTab()
     }
 
     override fun onDestroyView() {
@@ -105,6 +112,61 @@ class FirstFragment : Fragment() {
 
     private fun startActivity(klass: Class<*>) {
         startActivity(Intent(requireContext(), klass))
+    }
+
+    private fun initTab() {
+        with(binding) {
+            if (tlTab == null) return@with
+            mutableListOf<TabLayout.Tab>().apply {
+                repeat(7) {
+                    add(tlTab.newTab().apply { text = it.plus(1).toString() })
+                }
+                add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_chip, null, true) })
+                add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_chip_sub, null, true) })
+            }.forEach {
+                tlTab.addTab(it)
+            }
+
+            (tlTab.getChildAt(0) as LinearLayout)
+                .children
+                .filterIsInstance<TabLayout.TabView>()
+                .forEachIndexed { index, tab ->
+                    if (tab.tab?.customView is Chip) {
+                        (tab.tab?.customView as Chip).setOnClickListener {
+                            clearTab()
+                            selectTab(tab.tab)
+                            tab.tab?.select()
+                        }
+                    }
+
+                    tab.setOnClickListener {
+                        clearTab()
+                        selectTab(tab.tab)
+                        tab.tab?.select()
+                    }
+                }
+        }
+    }
+
+    private fun selectTab(tab: TabLayout.Tab?) {
+        if (tab == null) return
+        when (tab.customView) {
+            null -> tab.view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_200))
+            is Chip -> (tab.customView as Chip).chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+        }
+    }
+
+    private fun clearTab() {
+        (binding.tlTab?.getChildAt(0) as LinearLayout)
+            .children
+            .filterIsInstance<TabLayout.TabView>()
+            .forEach { tab ->
+                if (tab.tab?.customView == null) {
+                    tab.tab?.view?.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                } else {
+                    (tab.tab?.customView as? Chip)?.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), android.R.color.transparent)
+                }
+            }
     }
 }
 
