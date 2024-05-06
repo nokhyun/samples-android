@@ -135,6 +135,7 @@ fun CalendarScreen() {
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
         AnimatedVisibility(visible = !isWeek) {
+            // TODO month 현재 월의 LocalDate 필요.
             HorizontalCalendar(
                 modifier = Modifier
                     .testTag("Calendar"),
@@ -197,6 +198,7 @@ fun CalendarScreen() {
 
         // Week Calendar
         AnimatedVisibility(visible = isWeek) {
+            // TODO 주로 변환 시 시점을 어디로 맞출지가 중요한듯. 선택된게 있으면 거기 위주 아니면 첫째 주?
             WeekCalendar(
                 modifier = Modifier,
                 userScrollEnabled = false,

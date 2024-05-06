@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nokhyun.first.databinding.ListItemFirstBinding
 
 class FirstAdapter(
-   private val onItemClick: (iv: View, transitionName: String) -> Unit
+    private val onItemClick: (iv: View, transitionName: String) -> Unit
 ) : RecyclerView.Adapter<FirstAdapterViewHolder>() {
     private val firstList: List<Int> = mutableListOf<Int>().apply {
         repeat(100) {
