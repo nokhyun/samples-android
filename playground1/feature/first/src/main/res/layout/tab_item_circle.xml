@@ -2,15 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_one"
-        style="@style/Widget.MaterialComponents.Chip.Action"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/chip_choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="하하하하"
-        android:textColor="@color/black"
-        app:checkedIconVisible="false"
-        app:chipBackgroundColor="@android:color/darker_gray"
+        android:background="@drawable/background_circle_34"
+        android:gravity="center"
+        android:text="나"
+        android:textColor="@color/white"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

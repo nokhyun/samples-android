@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -23,6 +24,7 @@ import com.nokhyun.first.databinding.FragmentFirstBinding
 import com.nokhyun.network.FakeService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -119,9 +121,13 @@ class FirstFragment : Fragment() {
             if (tlTab == null) return@with
             mutableListOf<TabLayout.Tab>().apply {
                 repeat(7) {
-                    add(tlTab.newTab().apply { text = it.plus(1).toString() })
+                    if (it == 0) {
+                        add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_chip, null, true) })
+                    }
+//                    add(tlTab.newTab().apply { text = it.plus(1).toString() })
+                    add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_circle, null, true) })
+//                    add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_circle_chip, null, true) })
                 }
-                add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_chip, null, true) })
                 add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_chip_sub, null, true) })
             }.forEach {
                 tlTab.addTab(it)
@@ -150,9 +156,20 @@ class FirstFragment : Fragment() {
 
     private fun selectTab(tab: TabLayout.Tab?) {
         if (tab == null) return
-        when (tab.customView) {
-            null -> tab.view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_200))
-            is Chip -> (tab.customView as Chip).chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+        if(tab.customView == null){
+            tab.view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_200))
+        }else {
+            val customView = tab.customView
+
+            when(customView){
+                is Chip -> {
+                    if((customView as? Chip)?.id == R.id.chip_two) return
+                    (customView as? Chip)?.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+                }
+                is TextView -> {
+                    (customView as? TextView)?.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+                }
+            }
         }
     }
 
@@ -162,9 +179,19 @@ class FirstFragment : Fragment() {
             .filterIsInstance<TabLayout.TabView>()
             .forEach { tab ->
                 if (tab.tab?.customView == null) {
-                    tab.tab?.view?.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                    tab.tab?.view?.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.darker_gray))
                 } else {
-                    (tab.tab?.customView as? Chip)?.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), android.R.color.transparent)
+                    val customView = tab.tab?.customView
+
+                    when(customView){
+                        is Chip -> {
+                            if((customView as? Chip)?.id == R.id.chip_two) return
+                            (customView as? Chip)?.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), android.R.color.darker_gray)
+                        }
+                        is TextView -> {
+                            (customView as? TextView)?.backgroundTintList = ContextCompat.getColorStateList(requireContext(), android.R.color.darker_gray)
+                        }
+                    }
                 }
             }
     }
