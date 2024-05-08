@@ -20,9 +20,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
+import com.nokhyun.common.DefaultSnackBar
 import com.nokhyun.first.databinding.FragmentFirstBinding
 import com.nokhyun.network.FakeService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import javax.inject.Inject
@@ -105,6 +107,11 @@ class FirstFragment : Fragment() {
         }
 
         initTab()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(1000L)
+            DefaultSnackBar.make(binding.root, "aaa", ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_foreground)!!).show()
+        }
     }
 
     override fun onDestroyView() {
