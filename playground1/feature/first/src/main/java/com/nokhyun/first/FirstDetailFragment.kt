@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.nokhyun.common.SampleBottomSheetDialog
 import com.nokhyun.common.awaitEnd
 import com.nokhyun.first.databinding.FragmentFirstDetailBinding
 import kotlinx.coroutines.launch
@@ -39,6 +40,8 @@ class FirstDetailFragment : Fragment() {
         ViewCompat.setTransitionName(binding.ivDetail, args.firstModel.name)
 
         animator()
+
+        SampleBottomSheetDialog().show(parentFragmentManager, "")
     }
 
     private fun animator() {

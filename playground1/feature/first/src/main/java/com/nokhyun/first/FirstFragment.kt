@@ -107,11 +107,6 @@ class FirstFragment : Fragment() {
         }
 
         initTab()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            delay(1000L)
-            DefaultSnackBar.make(binding.root, "aaa", ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_foreground)!!).show()
-        }
     }
 
     override fun onDestroyView() {

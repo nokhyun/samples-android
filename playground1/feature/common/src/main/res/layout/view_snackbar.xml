@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:alpha="1"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="@android:color/holo_blue_bright"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,8 +19,8 @@
                 android:id="@+id/ivIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:backgroundTint="@android:color/black"
-                android:src="@android:drawable/ic_dialog_email"
+                android:backgroundTint="@color/cardview_light_background"
+                android:tintMode="src_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -32,13 +32,13 @@
                 android:layout_marginBottom="2dp"
                 android:gravity="start|center_vertical"
                 android:paddingStart="48dp"
-                android:text="하이"
                 android:textColor="@android:color/black"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="하이" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
