@@ -161,7 +161,7 @@ class FirstFragment : Fragment() {
                 }
 //                add(tlTab.newTab().apply { customView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item_chip_sub, null, true) })
 
-//                add(tlTab.newTab().apply { text = "BBBBBBB" })
+                add(tlTab.newTab().apply { text = "BBBBBBB" })
                 add(tlTab.newTab().apply { text = "Mon" })
                 add(tlTab.newTab().apply { text = "Tue" })
                 add(tlTab.newTab().apply { text = "Wed" })
@@ -211,7 +211,8 @@ class FirstFragment : Fragment() {
 //                    setTabwidth(index, 0.15f)
 //                }
 //                setTabwidth(index, 0.1f)
-                setTabWidth(index, if(index == 0) 0.15f else 0.1f)
+//                setTabWidth(index, if(index == 0) 0.15f else 0.1f)
+                setTabWidth(index, if(index == 0) 1f else 0.7f)
             }
 
 //            (binding.tlTab!!.getChildAt(0) as ViewGroup).let { tabView ->
